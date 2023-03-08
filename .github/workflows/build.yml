@@ -19,6 +19,7 @@ jobs:
 
       - run: |
           git config --global url.https://github.com/.insteadOf git://github.com/
+          git clone --depth 1 https://github.com/squizlabs/PHP_CodeSniffer tmp/src/Standards/
           make run
 
       - name: Commit built branch
