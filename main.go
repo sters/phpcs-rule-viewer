@@ -167,7 +167,7 @@ func main() {
 		log.Fatalf("err: %v", err)
 	}
 
-	writer, err := os.Create("build/temp.html")
+	writer, err := os.Create("build/index.html")
 	if err != nil {
 		log.Fatalf("err: %v", err)
 	}
