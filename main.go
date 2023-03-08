@@ -4,7 +4,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
@@ -138,7 +137,7 @@ func main() {
 		log.Printf("%s: error: %s", target.repositoryName, string(rr))
 
 		ruleSetDir := filepath.Join(tempDir, target.ruleSetDir)
-		files, err := ioutil.ReadDir(ruleSetDir)
+		files, err := os.ReadDir(ruleSetDir)
 		if err != nil {
 			panic(err)
 		}
@@ -177,7 +176,7 @@ func getRuleSet(ruleSetDir string) (*RuleSet, error) {
 
 func getRules(ruleSetDir string) ([]*Rule, error) {
 	docsDir := filepath.Join(ruleSetDir, "Docs")
-	dirs, err := ioutil.ReadDir(docsDir)
+	dirs, err := os.ReadDir(docsDir)
 	if err != nil {
 		return nil, failure.Wrap(err)
 	}
@@ -186,7 +185,7 @@ func getRules(ruleSetDir string) ([]*Rule, error) {
 
 	for _, dir := range dirs {
 		ruleDir := filepath.Join(docsDir, dir.Name())
-		files, err := ioutil.ReadDir(ruleDir)
+		files, err := os.ReadDir(ruleDir)
 		if err != nil {
 			return nil, failure.Wrap(err)
 		}
