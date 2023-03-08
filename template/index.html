@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>phpcs-rule-viewer</title>
+    <style>
+        .rule-sets + .rule-sets { margin-top: 3em; }
+        h2 { margin-bottom: 0; }
+        .subtitle { margin-top: 0; }
+        .rule-sets > details + details { margin-top: 1.5em; }
+        summary > h2, summary > h3, summary > h4, summary > h5 { display: inline; }
+        code { font-family: monospace; }
+    </style>
+</head>
+<body>
+
+{{- range .ruleSets -}}
+    <section class="rule-sets">
+
+        {{- $ruleSetName := .Name -}}
+        <h2 id="{{.TargetRepository.RepositoryName}}/{{$ruleSetName}}">{{$ruleSetName}}</h2>
+        <p class="subtitle"><a href="{{.TargetRepository.RepositoryURL}}" target="_blank">{{.TargetRepository.RepositoryURL}}</a></p>
+
+        <details>
+            <summary><h3>Rules</h3></summary>
+
+            <table>
+                {{- range .Rules -}}
+                    <div>
+                        <summary><h4 id="{{.Name}}">{{.Title}} ({{.Name}})</h4></summary>
+
+                        <p>{{.Description}}</p>
+
+                        <div>
+                            {{- range .CodeComparison -}}
+                                {{- range .Code -}}
+                                    <details>
+                                        <summary>{{.Title}}</summary>
+
+                                        <pre><code>{{.Body}}</code></pre>
+                                    </details>
+                                {{- end -}}
+                            {{- end -}}
+                        </div>
+                    </div>
+                {{- end -}}
+            </table>
+        </details>
+
+        <details>
+            <summary><h3>References</h3></summary>
+
+            <table>
+            {{- range .References -}}
+                <tr>
+                    <td><a href="#{{.Name}}">{{.Name}}</a></td>
+                    <td>{{.Properties}}</td>
+                </tr>
+            {{- end -}}
+            </table>
+        </details>
+
+    </section>
+{{- end -}}
+
+</body>
+</html>
