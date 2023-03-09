@@ -24,7 +24,7 @@ type targetRepository struct {
 var targets = []targetRepository{
 	{
 		"squizlabs/PHP_CodeSniffer",
-		"https://github.com/squizlabs/PHP_CodeSniffer",
+		"https://github.com/squizlabs/PHP_CodeSniffer.git",
 		"src/Standards/",
 	},
 }

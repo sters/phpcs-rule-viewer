@@ -17,10 +17,8 @@ jobs:
 
       - uses: actions/checkout@v3
 
-      - run: |
-          git clone -v --depth 1 https://github.com/squizlabs/PHP_CodeSniffer.git tmp/src/Standards/
-          ls -altR tmp
-      # - run: make run
+      - run: make run
+      - run: ls -altR tmp
 
       # - name: Commit built branch
       #   run: |
