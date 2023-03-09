@@ -20,18 +20,18 @@ jobs:
       - run: make run
       - run: ls -altR tmp
 
-      # - name: Commit built branch
-      #   run: |
-      #     set +e
-      #     git config user.name github-actions
-      #     git config user.email github-actions@github.com
-      #     cp -R build /tmp/build
-      #     git fetch
-      #     git branch -a
-      #     git checkout -f -b built origin/built
-      #     rm -rf ./*
-      #     cp -R /tmp/build/* .
-      #     git status
-      #     git add .
-      #     git commit -m "built"
-      #     git push origin built
+      - name: Commit built branch
+        run: |
+          set +e
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          cp -R build /tmp/build
+          git fetch
+          git branch -a
+          git checkout -f -b built origin/built
+          rm -rf ./*
+          cp -R /tmp/build/* .
+          git status
+          git add .
+          git commit -m "built"
+          git push origin built
