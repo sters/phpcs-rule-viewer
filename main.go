@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"html/template"
 	"io"
+	"io/fs"
 	"log"
 	"os"
 	"os/exec"
@@ -18,7 +19,134 @@ import (
 type targetRepository struct {
 	RepositoryName string
 	RepositoryURL  string
-	ruleSetDir     string
+	ruleSetsDir    string
+}
+
+func (t targetRepository) getTempDirPath() string {
+	return filepath.Join("tmp", t.RepositoryName)
+}
+
+func (t targetRepository) getRuleSetsDirPath() string {
+	return filepath.Join(t.getTempDirPath(), t.ruleSetsDir)
+}
+
+func (t targetRepository) getRuleSetDir(ruleSetDir string) string {
+	return filepath.Join(t.getRuleSetsDirPath(), ruleSetDir)
+}
+
+func (t targetRepository) getRuleSetXmlPath(ruleSetDir string) string {
+	return filepath.Join(t.getRuleSetDir(ruleSetDir), "ruleset.xml")
+}
+
+func (t targetRepository) getRuleSetDocsDir(ruleSetDir string) string {
+	return filepath.Join(t.getRuleSetDir(ruleSetDir), "Docs")
+}
+
+func (t targetRepository) getRuleDir(ruleSetDir string, ruleDir string) string {
+	return filepath.Join(t.getRuleSetDocsDir(ruleSetDir), ruleDir)
+}
+
+func (t targetRepository) getRuleFilePath(ruleSetDir string, ruleDir string, fileName string) string {
+	return filepath.Join(t.getRuleDir(ruleSetDir, ruleDir), fileName)
+}
+
+func (t targetRepository) gitClone() error {
+	cmd := exec.Command(
+		"git",
+		"clone",
+		"--depth", "1",
+		t.RepositoryURL,
+		t.getTempDirPath(),
+	)
+
+	cmdOut, _ := cmd.StdoutPipe()
+	cmdErr, _ := cmd.StderrPipe()
+
+	err := cmd.Start()
+	if err != nil {
+		return failure.Wrap(err)
+	}
+
+	rr, _ := io.ReadAll(cmdOut)
+	log.Printf("%s: git stdout: %s", t.RepositoryName, string(rr))
+
+	rr, _ = io.ReadAll(cmdErr)
+	log.Printf("%s: git stderr: %s", t.RepositoryName, string(rr))
+
+	return nil
+}
+
+func (t targetRepository) getRuleSetsDirPaths() ([]fs.DirEntry, error) {
+	dirs, err := os.ReadDir(t.getRuleSetsDirPath())
+	if err != nil {
+		return nil, failure.Wrap(err)
+	}
+
+	return dirs, nil
+}
+
+func (t targetRepository) getRuleSet(ruleSetName string) (*RuleSet, error) {
+	reader, err := os.Open(t.getRuleSetXmlPath(ruleSetName))
+	if err != nil {
+		return nil, failure.Wrap(err)
+	}
+	defer reader.Close()
+
+	result := RuleSet{}
+	dec := xml.NewDecoder(reader)
+	err = dec.Decode(&result)
+	if err != nil {
+		return nil, failure.Wrap(err)
+	}
+
+	result.Rules, err = t.getRules(ruleSetName)
+	if err != nil {
+		return nil, failure.Wrap(err)
+	}
+
+	return &result, nil
+}
+
+func (t targetRepository) getRules(ruleSetName string) ([]*Rule, error) {
+	dirs, err := os.ReadDir(t.getRuleSetDocsDir(ruleSetName))
+	if err != nil {
+		return nil, failure.Wrap(err)
+	}
+
+	rules := make([]*Rule, 0)
+
+	for _, dir := range dirs {
+		files, err := os.ReadDir(t.getRuleDir(ruleSetName, dir.Name()))
+		if err != nil {
+			return nil, failure.Wrap(err)
+		}
+
+		for _, file := range files {
+			reader, err := os.Open(t.getRuleFilePath(ruleSetName, dir.Name(), file.Name()))
+			if err != nil {
+				return nil, failure.Wrap(err)
+			}
+
+			defer reader.Close()
+			result := &Rule{}
+			dec := xml.NewDecoder(reader)
+			err = dec.Decode(&result)
+			if err != nil {
+				return nil, failure.Wrap(err)
+			}
+
+			result.Name = fmt.Sprintf(
+				"%s.%s.%s",
+				ruleSetName,
+				dir.Name(),
+				strings.TrimSuffix(file.Name(), "Standard.xml"),
+			)
+
+			rules = append(rules, result)
+		}
+	}
+
+	return rules, nil
 }
 
 var targets = []targetRepository{
@@ -112,45 +240,24 @@ func (r *RuleCode) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	return nil
 }
 
-func getTempDir(reponame string) string {
-	return fmt.Sprintf("tmp/%s", reponame)
-}
-
 func main() {
 	ruleSets := make([]*RuleSet, 0)
 	for _, target := range targets {
 		log.Printf("%s: Cloning", target.RepositoryName)
-		tempDir := getTempDir(target.RepositoryName)
-
-		cmd := exec.Command(
-			"git",
-			"clone",
-			"--depth", "1",
-			target.RepositoryURL,
-			tempDir,
-		)
-		cmdOut, _ := cmd.StdoutPipe()
-		cmdErr, _ := cmd.StderrPipe()
-		err := cmd.Start()
-		if err != nil {
-			log.Fatalf("err: %v", err)
+		if err := target.gitClone(); err != nil {
+			log.Printf("failed to clone repo: %v", err)
+			continue
 		}
-		rr, _ := io.ReadAll(cmdOut)
-		log.Printf("%s: git stdout: %s", target.RepositoryName, string(rr))
 
-		rr, _ = io.ReadAll(cmdErr)
-		log.Printf("%s: git stderr: %s", target.RepositoryName, string(rr))
-
-		ruleSetDir := filepath.Join(tempDir, target.ruleSetDir)
-		files, err := os.ReadDir(ruleSetDir)
+		dirs, err := target.getRuleSetsDirPaths()
 		if err != nil {
 			log.Fatalf("err: %v", err)
 		}
 
-		for _, file := range files {
-			ruleSet, err := getRuleSet(file.Name(), filepath.Join(ruleSetDir, file.Name()))
+		for _, dir := range dirs {
+			ruleSet, err := target.getRuleSet(dir.Name())
 			if err != nil {
-				log.Printf("%s: %s: err: %v", target.RepositoryName, file.Name(), err)
+				log.Printf("%s: %s: err: %v", target.RepositoryName, dir.Name(), err)
 				continue
 			}
 			ruleSet.TargetRepository = target
@@ -179,70 +286,4 @@ func main() {
 	}); err != nil {
 		log.Fatalf("err: %v", err)
 	}
-}
-
-func getRuleSet(ruleSetName string, ruleSetDir string) (*RuleSet, error) {
-	reader, err := os.Open(filepath.Join(ruleSetDir, "ruleset.xml"))
-	if err != nil {
-		return nil, failure.Wrap(err)
-	}
-	defer reader.Close()
-
-	result := RuleSet{}
-	dec := xml.NewDecoder(reader)
-	err = dec.Decode(&result)
-	if err != nil {
-		return nil, failure.Wrap(err)
-	}
-
-	result.Rules, err = getRules(ruleSetName, ruleSetDir)
-	if err != nil {
-		return nil, failure.Wrap(err)
-	}
-
-	return &result, nil
-}
-
-func getRules(ruleSetName string, ruleSetDir string) ([]*Rule, error) {
-	docsDir := filepath.Join(ruleSetDir, "Docs")
-	dirs, err := os.ReadDir(docsDir)
-	if err != nil {
-		return nil, failure.Wrap(err)
-	}
-
-	rules := make([]*Rule, 0)
-
-	for _, dir := range dirs {
-		ruleDir := filepath.Join(docsDir, dir.Name())
-		files, err := os.ReadDir(ruleDir)
-		if err != nil {
-			return nil, failure.Wrap(err)
-		}
-
-		for _, file := range files {
-			reader, err := os.Open(filepath.Join(ruleDir, file.Name()))
-			if err != nil {
-				return nil, failure.Wrap(err)
-			}
-
-			defer reader.Close()
-			result := &Rule{}
-			dec := xml.NewDecoder(reader)
-			err = dec.Decode(&result)
-			if err != nil {
-				return nil, failure.Wrap(err)
-			}
-
-			result.Name = fmt.Sprintf(
-				"%s.%s.%s",
-				ruleSetName,
-				dir.Name(),
-				strings.TrimSuffix(file.Name(), "Standard.xml"),
-			)
-
-			rules = append(rules, result)
-		}
-	}
-
-	return rules, nil
 }
