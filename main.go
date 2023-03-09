@@ -182,7 +182,7 @@ func main() {
 }
 
 func getRuleSet(ruleSetName string, ruleSetDir string) (*RuleSet, error) {
-	reader, err := os.Open(filepath.Join(ruleSetDir, "ruleSet.xml"))
+	reader, err := os.Open(filepath.Join(ruleSetDir, "ruleset.xml"))
 	if err != nil {
 		return nil, failure.Wrap(err)
 	}
