@@ -136,16 +136,17 @@ func main() {
 			log.Fatalf("err: %v", err)
 		}
 		rr, _ := io.ReadAll(cmdOut)
-		log.Printf("%s: out: %s", target.RepositoryName, string(rr))
+		log.Printf("%s: git stdout: %s", target.RepositoryName, string(rr))
 
 		rr, _ = io.ReadAll(cmdErr)
-		log.Printf("%s: error: %s", target.RepositoryName, string(rr))
+		log.Printf("%s: git stderr: %s", target.RepositoryName, string(rr))
 
 		ruleSetDir := filepath.Join(tempDir, target.ruleSetDir)
 		files, err := os.ReadDir(ruleSetDir)
 		if err != nil {
 			log.Fatalf("err: %v", err)
 		}
+		spew.Dump(files)
 
 		for _, file := range files {
 			ruleSet, err := getRuleSet(file.Name(), filepath.Join(ruleSetDir, file.Name()))
