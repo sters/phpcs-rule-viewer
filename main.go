@@ -146,11 +146,11 @@ func main() {
 		if err != nil {
 			log.Fatalf("err: %v", err)
 		}
-		spew.Dump(files)
 
 		for _, file := range files {
 			ruleSet, err := getRuleSet(file.Name(), filepath.Join(ruleSetDir, file.Name()))
 			if err != nil {
+				log.Printf("%s: %s: err: %v", target.RepositoryName, file.Name(), err)
 				continue
 			}
 			ruleSet.TargetRepository = target
