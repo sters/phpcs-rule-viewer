@@ -8,6 +8,7 @@
         h2 { margin-bottom: 0; }
         .subtitle { margin-top: 0; }
         .rule-sets > details + details { margin-top: 1.5em; }
+        .rule { margin-bottom: 1.5em; }
         summary > h2, summary > h3, summary > h4, summary > h5 { display: inline; }
         code { font-family: monospace; }
     </style>
@@ -24,27 +25,25 @@
         <details>
             <summary><h3>Rules</h3></summary>
 
-            <table>
-                {{- range .Rules -}}
+            {{- range .Rules -}}
+                <div class="rule">
+                    <summary><h4 id="{{.Name}}">{{.Title}} ({{.Name}})</h4></summary>
+
+                    <p>{{.Description}}</p>
+
                     <div>
-                        <summary><h4 id="{{.Name}}">{{.Title}} ({{.Name}})</h4></summary>
+                        {{- range .CodeComparison -}}
+                            {{- range .Code -}}
+                                <details>
+                                    <summary>{{.Title}}</summary>
 
-                        <p>{{.Description}}</p>
-
-                        <div>
-                            {{- range .CodeComparison -}}
-                                {{- range .Code -}}
-                                    <details>
-                                        <summary>{{.Title}}</summary>
-
-                                        <pre><code>{{.Body}}</code></pre>
-                                    </details>
-                                {{- end -}}
+                                    <pre><code>{{.Body}}</code></pre>
+                                </details>
                             {{- end -}}
-                        </div>
+                        {{- end -}}
                     </div>
-                {{- end -}}
-            </table>
+                </div>
+            {{- end -}}
         </details>
 
         <details>
