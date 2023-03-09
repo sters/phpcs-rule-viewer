@@ -12,7 +12,6 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/davecgh/go-spew/spew"
 	"github.com/morikuni/failure"
 )
 
@@ -262,7 +261,6 @@ func main() {
 			}
 			ruleSet.TargetRepository = target
 			ruleSets = append(ruleSets, ruleSet)
-			spew.Dump(ruleSet)
 		}
 	}
 
