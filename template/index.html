@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <title>phpcs-rule-viewer</title>
     <style>
-        .rule-sets + .rule-sets { margin-top: 3em; }
+        .rule-sets { margin-bottom: 3em; }
         h2 { margin-bottom: 0; }
         .subtitle { margin-top: 0; }
-        .rule-sets > details + details { margin-top: 1.5em; }
-        .rule { margin-bottom: 1.5em; }
+        .rule-sets > details { margin-bottom: 2em; }
+        .rules { margin-left: 2em; }
+        .rule { margin-bottom: 2em; }
+        .codes { margin-left: 2em; }
+        .codes > details { margin-bottom: 1em; }
         summary > h2, summary > h3, summary > h4, summary > h5 { display: inline; }
         code { font-family: monospace; }
     </style>
@@ -25,25 +28,27 @@
         <details>
             <summary><h3>Rules</h3></summary>
 
-            {{- range .Rules -}}
-                <div class="rule">
-                    <summary><h4 id="{{.Name}}">{{.Title}} ({{.Name}})</h4></summary>
+            <div class="rules">
+                {{- range .Rules -}}
+                    <div class="rule">
+                        <summary><h4 id="{{.Name}}">{{.Title}} ({{.Name}})</h4></summary>
 
-                    <p>{{.Description}}</p>
+                        <p>{{.Description}}</p>
 
-                    <div>
-                        {{- range .CodeComparison -}}
-                            {{- range .Code -}}
-                                <details>
-                                    <summary>{{.Title}}</summary>
+                        <div class="codes">
+                            {{- range .CodeComparison -}}
+                                {{- range .Code -}}
+                                    <details>
+                                        <summary>{{.Title}}</summary>
 
-                                    <pre><code>{{.Body}}</code></pre>
-                                </details>
+                                        <pre><code>{{.Body}}</code></pre>
+                                    </details>
+                                {{- end -}}
                             {{- end -}}
-                        {{- end -}}
+                        </div>
                     </div>
-                </div>
-            {{- end -}}
+                {{- end -}}
+            </div>
         </details>
 
         <details>
