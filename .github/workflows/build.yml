@@ -20,7 +20,7 @@ jobs:
       - env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git clone -v --depth 1 https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/squizlabs/PHP_CodeSniffer tmp/src/Standards/
+          git clone -v --depth 1 https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/squizlabs/PHP_CodeSniffer.git tmp/src/Standards/
       - run: make run
 
       - name: Commit built branch
