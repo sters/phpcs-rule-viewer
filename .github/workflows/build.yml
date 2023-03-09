@@ -17,10 +17,8 @@ jobs:
 
       - uses: actions/checkout@v3
 
-      - env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git clone -v --depth 1 https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/squizlabs/PHP_CodeSniffer.git tmp/src/Standards/
+      - run: |
+          git clone -v --depth 1 https://github.com/squizlabs/PHP_CodeSniffer.git tmp/src/Standards/
       - run: make run
 
       - name: Commit built branch
