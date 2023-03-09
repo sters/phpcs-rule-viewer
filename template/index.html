@@ -10,8 +10,9 @@
         .rule-sets > details { margin-bottom: 1em; }
         .rules { margin-left: 2em; }
         .rules .rule { margin-bottom: 2em; }
-        .rules .rule .codes .code { margin-left: 2em; }
-        .rules .rule .codes > details { margin-bottom: 1em; }
+        .rules .rule .rule-detail { margin-left: 2em; }
+        .rules .rule .rule-detail .codes .code { margin-left: 2em; }
+        .rules .rule .rule-detail .codes > details { margin-bottom: 1em; }
         summary > h2, summary > h3, summary > h4, summary > h5 { display: inline; }
         code { font-family: monospace; }
         p { margin-top: 0.5em; margin-bottom: 1em; }
@@ -34,20 +35,22 @@
                     <details class="rule">
                         <summary><h4 id="{{.Name}}">{{.Title}} ({{.Name}})</h4></summary>
 
-                        <p>{{.Description}}</p>
+                        <div class="rule-detail">
+                            <p>{{.Description}}</p>
 
-                        <div class="codes">
-                            {{- range .CodeComparison -}}
-                                {{- range .Code -}}
-                                    <details>
-                                        <summary>{{.Title}}</summary>
+                            <div class="codes">
+                                {{- range .CodeComparison -}}
+                                    {{- range .Code -}}
+                                        <details>
+                                            <summary>{{.Title}}</summary>
 
-                                        <div class="code">
-                                            <pre><code>{{.Body}}</code></pre>
-                                        </div>
-                                    </details>
+                                            <div class="code">
+                                                <pre><code>{{.Body}}</code></pre>
+                                            </div>
+                                        </details>
+                                    {{- end -}}
                                 {{- end -}}
-                            {{- end -}}
+                            </div>
                         </div>
                     </details>
                 {{- end -}}
