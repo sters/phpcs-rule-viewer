@@ -12,5 +12,4105 @@
         code { font-family: monospace; }
     </style>
 </head>
-<body></body>
+<body><section class="rule-sets"><h2 id="squizlabs/PHP_CodeSniffer/Generic">Generic</h2>
+        <p class="subtitle"><a href="https://github.com/squizlabs/PHP_CodeSniffer.git" target="_blank">https://github.com/squizlabs/PHP_CodeSniffer.git</a></p>
+
+        <details>
+            <summary><h3>Rules</h3></summary>
+
+            <table><div>
+                        <summary><h4 id="Generic.Arrays.DisallowLongArraySyntax">Short Array Syntax (Generic.Arrays.DisallowLongArraySyntax)</h4></summary>
+
+                        <p>Short array syntax must be used to define arrays.</p>
+
+                        <div><details>
+                                        <summary>Valid: Short form of array.</summary>
+
+                                        <pre><code>$arr = [
+    &#39;foo&#39; =&gt; &#39;bar&#39;,
+];
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Long form of array.</summary>
+
+                                        <pre><code>$arr = array(
+    &#39;foo&#39; =&gt; &#39;bar&#39;,
+);
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Arrays.DisallowShortArraySyntax">Long Array Syntax (Generic.Arrays.DisallowShortArraySyntax)</h4></summary>
+
+                        <p>Long array syntax must be used to define arrays.</p>
+
+                        <div><details>
+                                        <summary>Valid: Long form of array.</summary>
+
+                                        <pre><code>$arr = array(
+    &#39;foo&#39; =&gt; &#39;bar&#39;,
+);
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Short form of array.</summary>
+
+                                        <pre><code>$arr = [
+    &#39;foo&#39; =&gt; &#39;bar&#39;,
+];
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Classes.DuplicateClassName">Duplicate Class Names (Generic.Classes.DuplicateClassName)</h4></summary>
+
+                        <p>Class and Interface names should be unique in a project.  They should never be duplicated.</p>
+
+                        <div><details>
+                                        <summary>Valid: A unique class name.</summary>
+
+                                        <pre><code>class Foo
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: A class duplicated (including across multiple files).</summary>
+
+                                        <pre><code>class Foo
+{
+}
+
+class Foo
+{
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Classes.OpeningBraceSameLine">Opening Brace on Same Line (Generic.Classes.OpeningBraceSameLine)</h4></summary>
+
+                        <p>The opening brace of a class must be on the same line after the definition and must be the last thing on that line.</p>
+
+                        <div><details>
+                                        <summary>Valid: Opening brace on the same line.</summary>
+
+                                        <pre><code>class Foo {
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Opening brace on the next line.</summary>
+
+                                        <pre><code>class Foo
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Opening brace is the last thing on the line.</summary>
+
+                                        <pre><code>class Foo {
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Opening brace not last thing on the line.</summary>
+
+                                        <pre><code>class Foo { // Start of class.
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.CodeAnalysis.AssignmentInCondition">Assignment In Condition (Generic.CodeAnalysis.AssignmentInCondition)</h4></summary>
+
+                        <p>Variable assignments should not be made within conditions.</p>
+
+                        <div><details>
+                                        <summary>Valid: A variable comparison being executed within a condition.</summary>
+
+                                        <pre><code>if ($test === &#39;abc&#39;) {
+    // Code.
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: A variable assignment being made within a condition.</summary>
+
+                                        <pre><code>if ($test = &#39;abc&#39;) {
+    // Code.
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.CodeAnalysis.EmptyStatement">Empty Statements (Generic.CodeAnalysis.EmptyStatement)</h4></summary>
+
+                        <p>Control Structures must have at least one statement inside of the body.</p>
+
+                        <div><details>
+                                        <summary>Valid: There is a statement inside the control structure.</summary>
+
+                                        <pre><code>if ($test) {
+    $var = 1;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: The control structure has no statements.</summary>
+
+                                        <pre><code>if ($test) {
+    // do nothing
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.CodeAnalysis.ForLoopShouldBeWhileLoop">Condition-Only For Loops (Generic.CodeAnalysis.ForLoopShouldBeWhileLoop)</h4></summary>
+
+                        <p>For loops that have only a second expression (the condition) should be converted to while loops.</p>
+
+                        <div><details>
+                                        <summary>Valid: A for loop is used with all three expressions.</summary>
+
+                                        <pre><code>for ($i = 0; $i &lt; 10; $i&#43;&#43;) {
+    echo &#34;{$i}\n&#34;;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: A for loop is used without a first or third expression.</summary>
+
+                                        <pre><code>for (;$test;) {
+    $test = doSomething();
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.CodeAnalysis.ForLoopWithTestFunctionCall">For Loops With Function Calls in the Test (Generic.CodeAnalysis.ForLoopWithTestFunctionCall)</h4></summary>
+
+                        <p>For loops should not call functions inside the test for the loop when they can be computed beforehand.</p>
+
+                        <div><details>
+                                        <summary>Valid: A for loop that determines its end condition before the loop starts.</summary>
+
+                                        <pre><code>$end = count($foo);
+for ($i = 0; $i &lt; $end; $i&#43;&#43;) {
+    echo $foo[$i].&#34;\n&#34;;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: A for loop that unnecessarily computes the same value on every iteration.</summary>
+
+                                        <pre><code>for ($i = 0; $i &lt; count($foo); $i&#43;&#43;) {
+    echo $foo[$i].&#34;\n&#34;;
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.CodeAnalysis.JumbledIncrementer">Jumbled Incrementers (Generic.CodeAnalysis.JumbledIncrementer)</h4></summary>
+
+                        <p>Incrementers in nested loops should use different variable names.</p>
+
+                        <div><details>
+                                        <summary>Valid: Two different variables being used to increment.</summary>
+
+                                        <pre><code>for ($i = 0; $i &lt; 10; $i&#43;&#43;) {
+    for ($j = 0; $j &lt; 10; $j&#43;&#43;) {
+    }
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Inner incrementer is the same variable name as the outer one.</summary>
+
+                                        <pre><code>for ($i = 0; $i &lt; 10; $i&#43;&#43;) {
+    for ($j = 0; $j &lt; 10; $i&#43;&#43;) {
+    }
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.CodeAnalysis.UnconditionalIfStatement">Unconditional If Statements (Generic.CodeAnalysis.UnconditionalIfStatement)</h4></summary>
+
+                        <p>If statements that are always evaluated should not be used.</p>
+
+                        <div><details>
+                                        <summary>Valid: An if statement that only executes conditionally.</summary>
+
+                                        <pre><code>if ($test) {
+    $var = 1;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: An if statement that is always performed.</summary>
+
+                                        <pre><code>if (true) {
+    $var = 1;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: An if statement that only executes conditionally.</summary>
+
+                                        <pre><code>if ($test) {
+    $var = 1;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: An if statement that is never performed.</summary>
+
+                                        <pre><code>if (false) {
+    $var = 1;
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.CodeAnalysis.UnnecessaryFinalModifier">Unnecessary Final Modifiers (Generic.CodeAnalysis.UnnecessaryFinalModifier)</h4></summary>
+
+                        <p>Methods should not be declared final inside of classes that are declared final.</p>
+
+                        <div><details>
+                                        <summary>Valid: A method in a final class is not marked final.</summary>
+
+                                        <pre><code>final class Foo
+{
+    public function bar()
+    {
+    }
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: A method in a final class is also marked final.</summary>
+
+                                        <pre><code>final class Foo
+{
+    public final function bar()
+    {
+    }
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.CodeAnalysis.UnusedFunctionParameter">Unused function parameters (Generic.CodeAnalysis.UnusedFunctionParameter)</h4></summary>
+
+                        <p>All parameters in a functions signature should be used within the function.</p>
+
+                        <div><details>
+                                        <summary>Valid: All the parameters are used.</summary>
+
+                                        <pre><code>function addThree($a, $b, $c)
+{
+    return $a &#43; $b &#43; $c;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: One of the parameters is not being used.</summary>
+
+                                        <pre><code>function addThree($a, $b, $c)
+{
+    return $a &#43; $b;
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.CodeAnalysis.UselessOverridingMethod">Useless Overriding Methods (Generic.CodeAnalysis.UselessOverridingMethod)</h4></summary>
+
+                        <p>Methods should not be defined that only call the parent method.</p>
+
+                        <div><details>
+                                        <summary>Valid: A method that extends functionality on a parent method.</summary>
+
+                                        <pre><code>final class Foo
+{
+    public function bar()
+    {
+        parent::bar();
+        $this-&gt;doSomethingElse();
+    }
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: An overriding method that only calls the parent.</summary>
+
+                                        <pre><code>final class Foo
+{
+    public function bar()
+    {
+        parent::bar();
+    }
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Commenting.Fixme">Fixme Comments (Generic.Commenting.Fixme)</h4></summary>
+
+                        <p>FIXME Statements should be taken care of.</p>
+
+                        <div><details>
+                                        <summary>Valid: A comment without a fixme.</summary>
+
+                                        <pre><code>// Handle strange case
+if ($test) {
+    $var = 1;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: A fixme comment.</summary>
+
+                                        <pre><code>// FIXME: This needs to be fixed!
+if ($test) {
+    $var = 1;
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Commenting.Todo">Todo Comments (Generic.Commenting.Todo)</h4></summary>
+
+                        <p>TODO Statements should be taken care of.</p>
+
+                        <div><details>
+                                        <summary>Valid: A comment without a todo.</summary>
+
+                                        <pre><code>// Handle strange case
+if ($test) {
+    $var = 1;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: A todo comment.</summary>
+
+                                        <pre><code>// TODO: This needs to be fixed!
+if ($test) {
+    $var = 1;
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.ControlStructures.DisallowYodaConditions">Disallow Yoda conditions (Generic.ControlStructures.DisallowYodaConditions)</h4></summary>
+
+                        <p>Yoda conditions are disallowed.</p>
+
+                        <div><details>
+                                        <summary>Valid: value to be asserted must go on the right side of the comparison.</summary>
+
+                                        <pre><code>if ($test === null) {
+    $var = 1;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: value to be asserted must not be on the left.</summary>
+
+                                        <pre><code>if (null === $test) {
+    $var = 1;
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.ControlStructures.InlineControlStructure">Inline Control Structures (Generic.ControlStructures.InlineControlStructure)</h4></summary>
+
+                        <p>Control Structures should use braces.</p>
+
+                        <div><details>
+                                        <summary>Valid: Braces are used around the control structure.</summary>
+
+                                        <pre><code>if ($test) {
+    $var = 1;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: No braces are used for the control structure..</summary>
+
+                                        <pre><code>if ($test)
+    $var = 1;
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Debug.CSSLint">CSSLint (Generic.Debug.CSSLint)</h4></summary>
+
+                        <p>All css files should pass the basic csslint tests.</p>
+
+                        <div><details>
+                                        <summary>Valid: Valid CSS Syntax is used.</summary>
+
+                                        <pre><code>.foo: { width: 100%; }
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: The CSS has a typo in it.</summary>
+
+                                        <pre><code>.foo: { width: 100 %; }
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Debug.ClosureLinter">Closure Linter (Generic.Debug.ClosureLinter)</h4></summary>
+
+                        <p>All javascript files should pass basic Closure Linter tests.</p>
+
+                        <div><details>
+                                        <summary>Valid: Valid JS Syntax is used.</summary>
+
+                                        <pre><code>var foo = [1, 2];
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Trailing comma in a javascript array.</summary>
+
+                                        <pre><code>var foo = [1, 2,];
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Debug.JSHint">JSHint (Generic.Debug.JSHint)</h4></summary>
+
+                        <p>All javascript files should pass basic JSHint tests.</p>
+
+                        <div><details>
+                                        <summary>Valid: Valid JS Syntax is used.</summary>
+
+                                        <pre><code>var foo = 5;
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: The Javascript is using an undefined variable.</summary>
+
+                                        <pre><code>foo = 5;
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Files.ByteOrderMark">Byte Order Marks (Generic.Files.ByteOrderMark)</h4></summary>
+
+                        <p>Byte Order Marks that may corrupt your application should not be used.  These include 0xefbbbf (UTF-8), 0xfeff (UTF-16 BE) and 0xfffe (UTF-16 LE).</p>
+
+                        <div></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Files.EndFileNewline">End of File Newline (Generic.Files.EndFileNewline)</h4></summary>
+
+                        <p>Files should end with a newline character.</p>
+
+                        <div></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Files.EndFileNoNewline">No End of File Newline (Generic.Files.EndFileNoNewline)</h4></summary>
+
+                        <p>Files should not end with a newline character.</p>
+
+                        <div></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Files.ExecutableFile">Executable Files (Generic.Files.ExecutableFile)</h4></summary>
+
+                        <p>Files should not be executable.</p>
+
+                        <div></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Files.InlineHTML">Inline HTML (Generic.Files.InlineHTML)</h4></summary>
+
+                        <p>Files that contain php code should only have php code and should not have any &#34;inline html&#34;.</p>
+
+                        <div><details>
+                                        <summary>Valid: A php file with only php code in it.</summary>
+
+                                        <pre><code>&lt;?php
+$foo = &#39;bar&#39;;
+echo $foo . &#39;baz&#39;;
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: A php file with html in it outside of the php tags.</summary>
+
+                                        <pre><code>some string here
+&lt;?php
+$foo = &#39;bar&#39;;
+echo $foo . &#39;baz&#39;;
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Files.LineEndings">Line Endings (Generic.Files.LineEndings)</h4></summary>
+
+                        <p>Unix-style line endings are preferred (&#34;\n&#34; instead of &#34;\r\n&#34;).</p>
+
+                        <div></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Files.LineLength">Line Length (Generic.Files.LineLength)</h4></summary>
+
+                        <p>It is recommended to keep lines at approximately 80 characters long for better code readability.</p>
+
+                        <div></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Files.LowercasedFilename">Lowercased Filenames (Generic.Files.LowercasedFilename)</h4></summary>
+
+                        <p>Lowercase filenames are required.</p>
+
+                        <div></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Files.OneClassPerFile">One Class Per File (Generic.Files.OneClassPerFile)</h4></summary>
+
+                        <p>There should only be one class defined in a file.</p>
+
+                        <div><details>
+                                        <summary>Valid: Only one class in the file.</summary>
+
+                                        <pre><code>&lt;?php
+class Foo
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Multiple classes defined in one file.</summary>
+
+                                        <pre><code>&lt;?php
+class Foo
+{
+}
+
+class Bar
+{
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Files.OneInterfacePerFile">One Interface Per File (Generic.Files.OneInterfacePerFile)</h4></summary>
+
+                        <p>There should only be one interface defined in a file.</p>
+
+                        <div><details>
+                                        <summary>Valid: Only one interface in the file.</summary>
+
+                                        <pre><code>&lt;?php
+interface Foo
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Multiple interfaces defined in one file.</summary>
+
+                                        <pre><code>&lt;?php
+interface Foo
+{
+}
+
+interface Bar
+{
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Files.OneObjectStructurePerFile">One Object Structure Per File (Generic.Files.OneObjectStructurePerFile)</h4></summary>
+
+                        <p>There should only be one class or interface or trait defined in a file.</p>
+
+                        <div><details>
+                                        <summary>Valid: Only one object structure in the file.</summary>
+
+                                        <pre><code>&lt;?php
+trait Foo
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Multiple object structures defined in one file.</summary>
+
+                                        <pre><code>&lt;?php
+trait Foo
+{
+}
+
+class Bar
+{
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Files.OneTraitPerFile">One Trait Per File (Generic.Files.OneTraitPerFile)</h4></summary>
+
+                        <p>There should only be one trait defined in a file.</p>
+
+                        <div><details>
+                                        <summary>Valid: Only one trait in the file.</summary>
+
+                                        <pre><code>&lt;?php
+trait Foo
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Multiple traits defined in one file.</summary>
+
+                                        <pre><code>&lt;?php
+trait Foo
+{
+}
+
+trait Bar
+{
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Formatting.DisallowMultipleStatements">Multiple Statements On a Single Line (Generic.Formatting.DisallowMultipleStatements)</h4></summary>
+
+                        <p>Multiple statements are not allowed on a single line.</p>
+
+                        <div><details>
+                                        <summary>Valid: Two statements are spread out on two separate lines.</summary>
+
+                                        <pre><code>$foo = 1;
+$bar = 2;
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Two statements are combined onto one line.</summary>
+
+                                        <pre><code>$foo = 1; $bar = 2;
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Formatting.MultipleStatementAlignment">Aligning Blocks of Assignments (Generic.Formatting.MultipleStatementAlignment)</h4></summary>
+
+                        <p>When using plus-equals, minus-equals etc. still ensure the equals signs are aligned to one space after the longest variable name.</p>
+
+                        <div><details>
+                                        <summary>Equals signs aligned</summary>
+
+                                        <pre><code>$shortVar        = (1 &#43; 2);
+$veryLongVarName = &#39;string&#39;;
+$var             = foo($bar, $baz);
+</code></pre>
+                                    </details><details>
+                                        <summary>Not aligned; harder to read</summary>
+
+                                        <pre><code>$shortVar = (1 &#43; 2);
+$veryLongVarName = &#39;string&#39;;
+$var = foo($bar, $baz);
+</code></pre>
+                                    </details><details>
+                                        <summary>Equals signs aligned; only one space after longest var name</summary>
+
+                                        <pre><code>$shortVar       &#43;= 1;
+$veryLongVarName = 1;
+</code></pre>
+                                    </details><details>
+                                        <summary>Two spaces after longest var name</summary>
+
+                                        <pre><code>$shortVar        &#43;= 1;
+$veryLongVarName  = 1;
+</code></pre>
+                                    </details><details>
+                                        <summary>Equals signs aligned</summary>
+
+                                        <pre><code>$shortVar         = 1;
+$veryLongVarName -= 1;
+</code></pre>
+                                    </details><details>
+                                        <summary>Equals signs not aligned</summary>
+
+                                        <pre><code>$shortVar        = 1;
+$veryLongVarName -= 1;
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Formatting.NoSpaceAfterCast">Space After Casts (Generic.Formatting.NoSpaceAfterCast)</h4></summary>
+
+                        <p>Spaces are not allowed after casting operators.</p>
+
+                        <div><details>
+                                        <summary>Valid: A cast operator is immediately before its value.</summary>
+
+                                        <pre><code>$foo = (string)1;
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: A cast operator is followed by whitespace.</summary>
+
+                                        <pre><code>$foo = (string) 1;
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Formatting.SpaceAfterCast">Space After Casts (Generic.Formatting.SpaceAfterCast)</h4></summary>
+
+                        <p>Exactly one space is allowed after a cast.</p>
+
+                        <div><details>
+                                        <summary>Valid: A cast operator is followed by one space.</summary>
+
+                                        <pre><code>$foo = (string) 1;
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: A cast operator is not followed by whitespace.</summary>
+
+                                        <pre><code>$foo = (string)1;
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Formatting.SpaceAfterNot">Space After NOT operator (Generic.Formatting.SpaceAfterNot)</h4></summary>
+
+                        <p>Exactly one space is allowed after the NOT operator.</p>
+
+                        <div><details>
+                                        <summary>Valid: A NOT operator followed by one space.</summary>
+
+                                        <pre><code>if (! $someVar || ! $x instanceOf stdClass) {};
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: A NOT operator not followed by whitespace or followed by too much whitespace.</summary>
+
+                                        <pre><code>if (!$someVar || !$x instanceOf stdClass) {};
+
+if (!     $someVar || !
+    $x instanceOf stdClass) {};
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Functions.CallTimePassByReference">Call-Time Pass-By-Reference (Generic.Functions.CallTimePassByReference)</h4></summary>
+
+                        <p>Call-time pass-by-reference is not allowed. It should be declared in the function definition.</p>
+
+                        <div><details>
+                                        <summary>Valid: Pass-by-reference is specified in the function definition.</summary>
+
+                                        <pre><code>function foo(&amp;$bar)
+{
+    $bar&#43;&#43;;
+}
+
+$baz = 1;
+foo($baz);
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Pass-by-reference is done in the call to a function.</summary>
+
+                                        <pre><code>function foo($bar)
+{
+    $bar&#43;&#43;;
+}
+
+$baz = 1;
+foo(&amp;$baz);
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Functions.FunctionCallArgumentSpacing">Function Argument Spacing (Generic.Functions.FunctionCallArgumentSpacing)</h4></summary>
+
+                        <p>Function arguments should have one space after a comma, and single spaces surrounding the equals sign for default values.</p>
+
+                        <div><details>
+                                        <summary>Valid: Single spaces after a comma.</summary>
+
+                                        <pre><code>function foo($bar, $baz)
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: No spaces after a comma.</summary>
+
+                                        <pre><code>function foo($bar,$baz)
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Single spaces around an equals sign in function declaration.</summary>
+
+                                        <pre><code>function foo($bar, $baz = true)
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: No spaces around an equals sign in function declaration.</summary>
+
+                                        <pre><code>function foo($bar, $baz=true)
+{
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Functions.OpeningFunctionBraceBsdAllman">Opening Brace in Function Declarations (Generic.Functions.OpeningFunctionBraceBsdAllman)</h4></summary>
+
+                        <p>Function declarations follow the &#34;BSD/Allman style&#34;. The function brace is on the line following the function declaration and is indented to the same column as the start of the function declaration.</p>
+
+                        <div><details>
+                                        <summary>Valid: brace on next line</summary>
+
+                                        <pre><code>function fooFunction($arg1, $arg2 = &#39;&#39;)
+{
+    ...
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: brace on same line</summary>
+
+                                        <pre><code>function fooFunction($arg1, $arg2 = &#39;&#39;) {
+    ...
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Functions.OpeningFunctionBraceKernighanRitchie">Opening Brace in Function Declarations (Generic.Functions.OpeningFunctionBraceKernighanRitchie)</h4></summary>
+
+                        <p>Function declarations follow the &#34;Kernighan/Ritchie style&#34;. The function brace is on the same line as the function declaration. One space is required between the closing parenthesis and the brace.</p>
+
+                        <div><details>
+                                        <summary>Valid: brace on same line</summary>
+
+                                        <pre><code>function fooFunction($arg1, $arg2 = &#39;&#39;) {
+    ...
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: brace on next line</summary>
+
+                                        <pre><code>function fooFunction($arg1, $arg2 = &#39;&#39;)
+{
+    ...
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Metrics.CyclomaticComplexity">Cyclomatic Complexity (Generic.Metrics.CyclomaticComplexity)</h4></summary>
+
+                        <p>Functions should not have a cyclomatic complexity greater than 20, and should try to stay below a complexity of 10.</p>
+
+                        <div></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Metrics.NestingLevel">Nesting Level (Generic.Metrics.NestingLevel)</h4></summary>
+
+                        <p>Functions should not have a nesting level greater than 10, and should try to stay below 5.</p>
+
+                        <div></div>
+                    </div><div>
+                        <summary><h4 id="Generic.NamingConventions.AbstractClassNamePrefix">Abstract class name (Generic.NamingConventions.AbstractClassNamePrefix)</h4></summary>
+
+                        <p>Abstract class names must be prefixed with &#34;Abstract&#34;, e.g. AbstractBar.</p>
+
+                        <div><details>
+                                        <summary>Valid: </summary>
+
+                                        <pre><code>abstract class AbstractBar
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: </summary>
+
+                                        <pre><code>abstract class Bar
+{
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.NamingConventions.CamelCapsFunctionName">camelCaps Function Names (Generic.NamingConventions.CamelCapsFunctionName)</h4></summary>
+
+                        <p>Functions should use camelCaps format for their names. Only PHP&#39;s magic methods should use a double underscore prefix.</p>
+
+                        <div><details>
+                                        <summary>Valid: A function in camelCaps format.</summary>
+
+                                        <pre><code>function doSomething()
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: A function in snake_case format.</summary>
+
+                                        <pre><code>function do_something()
+{
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.NamingConventions.ConstructorName">Constructor name (Generic.NamingConventions.ConstructorName)</h4></summary>
+
+                        <p>Constructors should be named __construct, not after the class.</p>
+
+                        <div><details>
+                                        <summary>Valid: The constructor is named __construct.</summary>
+
+                                        <pre><code>class Foo
+{
+    function __construct()
+    {
+    }
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: The old style class name constructor is used.</summary>
+
+                                        <pre><code>class Foo
+{
+    function Foo()
+    {
+    }
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.NamingConventions.InterfaceNameSuffix">Interface name suffix (Generic.NamingConventions.InterfaceNameSuffix)</h4></summary>
+
+                        <p>Interface names must be suffixed with &#34;Interface&#34;, e.g. BarInterface.</p>
+
+                        <div><details>
+                                        <summary>Valid: </summary>
+
+                                        <pre><code>interface BarInterface
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: </summary>
+
+                                        <pre><code>interface Bar
+{
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.NamingConventions.TraitNameSuffix">Trait name suffix (Generic.NamingConventions.TraitNameSuffix)</h4></summary>
+
+                        <p>Trait names must be suffixed with &#34;Trait&#34;, e.g. BarTrait.</p>
+
+                        <div><details>
+                                        <summary>Valid: </summary>
+
+                                        <pre><code>trait BarTrait
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: </summary>
+
+                                        <pre><code>trait Bar
+{
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.NamingConventions.UpperCaseConstantName">Constant Names (Generic.NamingConventions.UpperCaseConstantName)</h4></summary>
+
+                        <p>Constants should always be all-uppercase, with underscores to separate words.</p>
+
+                        <div><details>
+                                        <summary>Valid: all uppercase</summary>
+
+                                        <pre><code>define(&#39;FOO_CONSTANT&#39;, &#39;foo&#39;);
+
+class FooClass
+{
+    const FOO_CONSTANT = &#39;foo&#39;;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: mixed case</summary>
+
+                                        <pre><code>define(&#39;Foo_Constant&#39;, &#39;foo&#39;);
+
+class FooClass
+{
+    const foo_constant = &#39;foo&#39;;
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.PHP.BacktickOperator">Backtick Operator (Generic.PHP.BacktickOperator)</h4></summary>
+
+                        <p>Disallow the use of the backtick operator for execution of shell commands.</p>
+
+                        <div></div>
+                    </div><div>
+                        <summary><h4 id="Generic.PHP.CharacterBeforePHPOpeningTag">Opening Tag at Start of File (Generic.PHP.CharacterBeforePHPOpeningTag)</h4></summary>
+
+                        <p>The opening php tag should be the first item in the file.</p>
+
+                        <div><details>
+                                        <summary>Valid: A file starting with an opening php tag.</summary>
+
+                                        <pre><code>&lt;?php
+echo &#39;Foo&#39;;
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: A file with content before the opening php tag.</summary>
+
+                                        <pre><code>Beginning content
+&lt;?php
+echo &#39;Foo&#39;;
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.PHP.ClosingPHPTag">Closing PHP Tags (Generic.PHP.ClosingPHPTag)</h4></summary>
+
+                        <p>All opening php tags should have a corresponding closing tag.</p>
+
+                        <div><details>
+                                        <summary>Valid: A closing tag paired with it&#39;s opening tag.</summary>
+
+                                        <pre><code>&lt;?php
+echo &#39;Foo&#39;;
+?&gt;
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: No closing tag paired with the opening tag.</summary>
+
+                                        <pre><code>&lt;?php
+echo &#39;Foo&#39;;
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.PHP.DeprecatedFunctions">Deprecated Functions (Generic.PHP.DeprecatedFunctions)</h4></summary>
+
+                        <p>Deprecated functions should not be used.</p>
+
+                        <div><details>
+                                        <summary>Valid: A non-deprecated function is used.</summary>
+
+                                        <pre><code>$foo = explode(&#39;a&#39;, $bar);
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: A deprecated function is used.</summary>
+
+                                        <pre><code>$foo = split(&#39;a&#39;, $bar);
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.PHP.DisallowAlternativePHPTags">Alternative PHP Code Tags (Generic.PHP.DisallowAlternativePHPTags)</h4></summary>
+
+                        <p>Always use &lt;?php ?&gt; to delimit PHP code, do not use the ASP &lt;% %&gt; style tags nor the &lt;script language=&#34;php&#34;&gt;&lt;/script&gt; tags. This is the most portable way to include PHP code on differing operating systems and setups.</p>
+
+                        <div></div>
+                    </div><div>
+                        <summary><h4 id="Generic.PHP.DisallowRequestSuperglobal">$_REQUEST Superglobal (Generic.PHP.DisallowRequestSuperglobal)</h4></summary>
+
+                        <p>$_REQUEST should never be used due to the ambiguity created as to where the data is coming from. Use $_POST, $_GET, or $_COOKIE instead.</p>
+
+                        <div></div>
+                    </div><div>
+                        <summary><h4 id="Generic.PHP.DisallowShortOpenTag">PHP Code Tags (Generic.PHP.DisallowShortOpenTag)</h4></summary>
+
+                        <p>Always use &lt;?php ?&gt; to delimit PHP code, not the &lt;? ?&gt; shorthand. This is the most portable way to include PHP code on differing operating systems and setups.</p>
+
+                        <div></div>
+                    </div><div>
+                        <summary><h4 id="Generic.PHP.DiscourageGoto">Goto (Generic.PHP.DiscourageGoto)</h4></summary>
+
+                        <p>Discourage the use of the PHP `goto` language construct.</p>
+
+                        <div></div>
+                    </div><div>
+                        <summary><h4 id="Generic.PHP.ForbiddenFunctions">Forbidden Functions (Generic.PHP.ForbiddenFunctions)</h4></summary>
+
+                        <p>The forbidden functions sizeof() and delete() should not be used.</p>
+
+                        <div><details>
+                                        <summary>Valid: count() is used in place of sizeof().</summary>
+
+                                        <pre><code>$foo = count($bar);
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: sizeof() is used.</summary>
+
+                                        <pre><code>$foo = sizeof($bar);
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.PHP.LowerCaseConstant">Lowercase PHP Constants (Generic.PHP.LowerCaseConstant)</h4></summary>
+
+                        <p>The &lt;em&gt;true&lt;/em&gt;, &lt;em&gt;false&lt;/em&gt; and &lt;em&gt;null&lt;/em&gt; constants must always be lowercase.</p>
+
+                        <div><details>
+                                        <summary>Valid: lowercase constants</summary>
+
+                                        <pre><code>if ($var === false || $var === null) {
+    $var = true;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: uppercase constants</summary>
+
+                                        <pre><code>if ($var === FALSE || $var === NULL) {
+    $var = TRUE;
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.PHP.LowerCaseKeyword">Lowercase Keywords (Generic.PHP.LowerCaseKeyword)</h4></summary>
+
+                        <p>All PHP keywords should be lowercase.</p>
+
+                        <div><details>
+                                        <summary>Valid: Lowercase array keyword used.</summary>
+
+                                        <pre><code>$foo = array();
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Non-lowercase array keyword used.</summary>
+
+                                        <pre><code>$foo = Array();
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.PHP.LowerCaseType">Lowercase PHP Types (Generic.PHP.LowerCaseType)</h4></summary>
+
+                        <p>All PHP types used for type casting should be lowercase.</p>
+
+                        <div><details>
+                                        <summary>Valid: Lowercase type declarations used.</summary>
+
+                                        <pre><code>function myFunction(int $foo) : string {
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Non-lowercase type declarations used.</summary>
+
+                                        <pre><code>function myFunction(Int $foo) : STRING {
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Lowercase type used.</summary>
+
+                                        <pre><code>$foo = (bool) $isValid;
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Non-lowercase type used.</summary>
+
+                                        <pre><code>$foo = (BOOL) $isValid;
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.PHP.NoSilencedErrors">Silenced Errors (Generic.PHP.NoSilencedErrors)</h4></summary>
+
+                        <p>Suppressing Errors is not allowed.</p>
+
+                        <div><details>
+                                        <summary>Valid: isset() is used to verify that a variable exists before trying to use it.</summary>
+
+                                        <pre><code>if (isset($foo) &amp;&amp; $foo) {
+    echo &#34;Hello\n&#34;;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Errors are suppressed.</summary>
+
+                                        <pre><code>if (@$foo) {
+    echo &#34;Hello\n&#34;;
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.PHP.SAPIUsage">SAPI Usage (Generic.PHP.SAPIUsage)</h4></summary>
+
+                        <p>The PHP_SAPI constant should be used instead of php_sapi_name().</p>
+
+                        <div><details>
+                                        <summary>Valid: PHP_SAPI is used.</summary>
+
+                                        <pre><code>if (PHP_SAPI === &#39;cli&#39;) {
+    echo &#34;Hello, CLI user.&#34;;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: php_sapi_name() is used.</summary>
+
+                                        <pre><code>if (php_sapi_name() === &#39;cli&#39;) {
+    echo &#34;Hello, CLI user.&#34;;
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.PHP.UpperCaseConstant">Uppercase PHP Constants (Generic.PHP.UpperCaseConstant)</h4></summary>
+
+                        <p>The &lt;em&gt;true&lt;/em&gt;, &lt;em&gt;false&lt;/em&gt; and &lt;em&gt;null&lt;/em&gt; constants must always be uppercase.</p>
+
+                        <div><details>
+                                        <summary>Valid: uppercase constants</summary>
+
+                                        <pre><code>if ($var === FALSE || $var === NULL) {
+    $var = TRUE;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: lowercase constants</summary>
+
+                                        <pre><code>if ($var === false || $var === null) {
+    $var = true;
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.Strings.UnnecessaryStringConcat">Unnecessary String Concatenation (Generic.Strings.UnnecessaryStringConcat)</h4></summary>
+
+                        <p>Strings should not be concatenated together.</p>
+
+                        <div><details>
+                                        <summary>Valid: A string can be concatenated with an expression.</summary>
+
+                                        <pre><code>echo &#39;5 &#43; 2 = &#39; . (5 &#43; 2);
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Strings should not be concatenated together.</summary>
+
+                                        <pre><code>echo &#39;Hello&#39; . &#39; &#39; . &#39;World&#39;;
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.VersionControl.SubversionProperties">Subversion Properties (Generic.VersionControl.SubversionProperties)</h4></summary>
+
+                        <p>All php files in a subversion repository should have the svn:keywords property set to &#39;Author Id Revision&#39; and the svn:eol-style property set to &#39;native&#39;.</p>
+
+                        <div></div>
+                    </div><div>
+                        <summary><h4 id="Generic.WhiteSpace.ArbitraryParenthesesSpacing">Arbitrary Parentheses Spacing (Generic.WhiteSpace.ArbitraryParenthesesSpacing)</h4></summary>
+
+                        <p>Arbitrary sets of parentheses should have no spaces inside.</p>
+
+                        <div><details>
+                                        <summary>Valid: no spaces on the inside of a set of arbitrary parentheses.</summary>
+
+                                        <pre><code>$a = (null !== $extra);
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: spaces or new lines on the inside of a set of arbitrary parentheses.</summary>
+
+                                        <pre><code>$a = ( null !== $extra );
+
+$a = (
+    null !== $extra
+);
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.WhiteSpace.DisallowSpaceIndent">No Space Indentation (Generic.WhiteSpace.DisallowSpaceIndent)</h4></summary>
+
+                        <p>Tabs should be used for indentation instead of spaces.</p>
+
+                        <div></div>
+                    </div><div>
+                        <summary><h4 id="Generic.WhiteSpace.DisallowTabIndent">No Tab Indentation (Generic.WhiteSpace.DisallowTabIndent)</h4></summary>
+
+                        <p>Spaces should be used for indentation instead of tabs.</p>
+
+                        <div></div>
+                    </div><div>
+                        <summary><h4 id="Generic.WhiteSpace.ScopeIndent">Scope Indentation (Generic.WhiteSpace.ScopeIndent)</h4></summary>
+
+                        <p>Indentation for control structures, classes, and functions should be 4 spaces per level.</p>
+
+                        <div><details>
+                                        <summary>Valid: 4 spaces are used to indent a control structure.</summary>
+
+                                        <pre><code>if ($test) {
+    $var = 1;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: 8 spaces are used to indent a control structure.</summary>
+
+                                        <pre><code>if ($test) {
+        $var = 1;
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Generic.WhiteSpace.SpreadOperatorSpacingAfter">Spacing After Spread Operator (Generic.WhiteSpace.SpreadOperatorSpacingAfter)</h4></summary>
+
+                        <p>There should be no space between the spread operator and the variable/function call it applies to.</p>
+
+                        <div><details>
+                                        <summary>Valid: No space between the spread operator and the variable/function call it applies to.</summary>
+
+                                        <pre><code>function foo(&amp;...$spread) {
+    bar(...$spread);
+
+    bar(
+        [...$foo],
+        ...array_values($keyedArray)
+    );
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: space found between the spread operator and the variable/function call it applies to.</summary>
+
+                                        <pre><code>function bar(... $spread) {
+    bar(...
+        $spread
+    );
+
+    bar(
+        [...  $foo ],.../*comment*/array_values($keyedArray)
+    );
+}
+</code></pre>
+                                    </details></div>
+                    </div></table>
+        </details>
+
+        <details>
+            <summary><h3>References</h3></summary>
+
+            <table></table>
+        </details>
+
+    </section><section class="rule-sets"><h2 id="squizlabs/PHP_CodeSniffer/PEAR">PEAR</h2>
+        <p class="subtitle"><a href="https://github.com/squizlabs/PHP_CodeSniffer.git" target="_blank">https://github.com/squizlabs/PHP_CodeSniffer.git</a></p>
+
+        <details>
+            <summary><h3>Rules</h3></summary>
+
+            <table><div>
+                        <summary><h4 id="PEAR.Classes.ClassDeclaration">Class Declarations (PEAR.Classes.ClassDeclaration)</h4></summary>
+
+                        <p>The opening brace of a class must be on the line after the definition by itself.</p>
+
+                        <div><details>
+                                        <summary>Valid: Opening brace on the correct line.</summary>
+
+                                        <pre><code>class Foo
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Opening brace on same line as declaration.</summary>
+
+                                        <pre><code>class Foo {
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="PEAR.Commenting.ClassComment">Class Comments (PEAR.Commenting.ClassComment)</h4></summary>
+
+                        <p>Classes and interfaces must have a non-empty doc comment.  The short description must be on the second line of the comment.  Each description must have one blank comment line before and after.  There must be one blank line before the tags in the comments.  A @version tag must be in Release: package_version format.</p>
+
+                        <div><details>
+                                        <summary>Valid: A doc comment for the class.</summary>
+
+                                        <pre><code>/**
+ * The Foo class.
+ */
+class Foo
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: No doc comment for the class.</summary>
+
+                                        <pre><code>class Foo
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: A doc comment for the class.</summary>
+
+                                        <pre><code>/**
+ * The Foo class.
+ */
+class Foo
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Invalid comment type for the class.</summary>
+
+                                        <pre><code>// The Foo class.
+class Foo
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: A doc comment for the class.</summary>
+
+                                        <pre><code>/**
+ * The Foo class.
+ */
+class Foo
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: The blank line after the comment makes it appear as a file comment, not a class comment.</summary>
+
+                                        <pre><code>/**
+ * The Foo class.
+ */
+
+class Foo
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Short description is the second line of the comment.</summary>
+
+                                        <pre><code>/**
+ * The Foo class.
+ */
+class Foo
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: An extra blank line before the short description.</summary>
+
+                                        <pre><code>/**
+ *
+ * The Foo class.
+ */
+class Foo
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Exactly one blank line around descriptions.</summary>
+
+                                        <pre><code>/**
+ * The Foo class.
+ * 
+ * A helper for the Bar class.
+ * 
+ * @see Bar
+ */
+class Foo
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Extra blank lines around the descriptions.</summary>
+
+                                        <pre><code>/**
+ * The Foo class.
+ * 
+ * 
+ * A helper for the Bar class.
+ * 
+ * 
+ * @see Bar
+ */
+class Foo
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Exactly one blank line before the tags.</summary>
+
+                                        <pre><code>/**
+ * The Foo class.
+ * 
+ * @see Bar
+ */
+class Foo
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Extra blank lines before the tags.</summary>
+
+                                        <pre><code>/**
+ * The Foo class.
+ * 
+ * 
+ * @see Bar
+ */
+class Foo
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Version tag is in the correct format.</summary>
+
+                                        <pre><code>/**
+ * The Foo class.
+ *
+ * @version Release: 1.0
+ */
+class Foo
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: No Release: text.</summary>
+
+                                        <pre><code>/**
+ * The Foo class.
+ *
+ * @version 1.0
+ */
+class Foo
+{
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="PEAR.Commenting.FileComment">File Comments (PEAR.Commenting.FileComment)</h4></summary>
+
+                        <p>Files must have a non-empty doc comment.  The short description must be on the second line of the comment.  Each description must have one blank comment line before and after.  There must be one blank line before the tags in the comments.  There must be a category, package, author, license, and link tag.  There may only be one category, package, subpackage, license, version, since and deprecated tag.  The tags must be in the order category, package, subpackage, author, copyright, license, version, link, see, since, and deprecated.  The php version must be specified.</p>
+
+                        <div><details>
+                                        <summary>Valid: A file comment is used.</summary>
+
+                                        <pre><code>&lt;?php
+/**
+ * Short description here.
+ *
+ * PHP version 5
+ *
+ * @category Foo
+ * @package Foo_Helpers
+ * @author Marty McFly &lt;mmcfly@example.com&gt;
+ * @copyright 2013-2014 Foo Inc.
+ * @license MIT License
+ * @link http://example.com
+ */
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: No doc comment for the class.</summary>
+
+                                        <pre><code>&lt;?php
+
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Short description is the second line of the comment.</summary>
+
+                                        <pre><code>&lt;?php
+/**
+ * Short description here.
+ *
+ * PHP version 5
+ *
+ * @category Foo
+ * @package Foo_Helpers
+ * @author Marty McFly &lt;mmcfly@example.com&gt;
+ * @copyright 2013-2014 Foo Inc.
+ * @license MIT License
+ * @link http://example.com
+ */
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: An extra blank line before the short description.</summary>
+
+                                        <pre><code>&lt;?php
+/**
+ * 
+ * Short description here.
+ *
+ * PHP version 5
+ *
+ * @category Foo
+ * @package Foo_Helpers
+ * @author Marty McFly &lt;mmcfly@example.com&gt;
+ * @copyright 2013-2014 Foo Inc.
+ * @license MIT License
+ * @link http://example.com
+ */
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Exactly one blank line around descriptions.</summary>
+
+                                        <pre><code>&lt;?php
+/**
+ * Short description here.
+ * 
+ * PHP version 5
+ * 
+ * @category Foo
+ * @package Foo_Helpers
+ * @author Marty McFly &lt;mmcfly@example.com&gt;
+ * @copyright 2013-2014 Foo Inc.
+ * @license MIT License
+ * @link http://example.com
+ */
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Extra blank lines around the descriptions.</summary>
+
+                                        <pre><code>&lt;?php
+/**
+ * Short description here.
+ * 
+ * 
+ * PHP version 5
+ * 
+ * 
+ * @category Foo
+ * @package Foo_Helpers
+ * @author Marty McFly &lt;mmcfly@example.com&gt;
+ * @copyright 2013-2014 Foo Inc.
+ * @license MIT License
+ * @link http://example.com
+ */
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Exactly one blank line before the tags.</summary>
+
+                                        <pre><code>&lt;?php
+/**
+ * Short description here.
+ *
+ * PHP version 5
+ * 
+ * @category Foo
+ * @package Foo_Helpers
+ * @author Marty McFly &lt;mmcfly@example.com&gt;
+ * @copyright 2013-2014 Foo Inc.
+ * @license MIT License
+ * @link http://example.com
+ */
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Extra blank lines before the tags.</summary>
+
+                                        <pre><code>&lt;?php
+/**
+ * Short description here.
+ *
+ * PHP version 5
+ * 
+ * 
+ * @category Foo
+ * @package Foo_Helpers
+ * @author Marty McFly &lt;mmcfly@example.com&gt;
+ * @copyright 2013-2014 Foo Inc.
+ * @license MIT License
+ * @link http://example.com
+ */
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: All required tags are used.</summary>
+
+                                        <pre><code>&lt;?php
+/**
+ * Short description here.
+ *
+ * PHP version 5
+ *
+ * @category Foo
+ * @package Foo_Helpers
+ * @author Marty McFly &lt;mmcfly@example.com&gt;
+ * @copyright 2013-2014 Foo Inc.
+ * @license MIT License
+ * @link http://example.com
+ */
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Missing an author tag.</summary>
+
+                                        <pre><code>&lt;?php
+/**
+ * Short description here.
+ *
+ * PHP version 5
+ *
+ * @category Foo
+ * @package Foo_Helpers
+ * @copyright 2013-2014 Foo Inc.
+ * @license MIT License
+ * @link http://example.com
+ */
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Tags that should only be used once are only used once.</summary>
+
+                                        <pre><code>&lt;?php
+/**
+ * Short description here.
+ *
+ * PHP version 5
+ *
+ * @category Foo
+ * @package Foo_Helpers
+ * @author Marty McFly &lt;mmcfly@example.com&gt;
+ * @copyright 2013-2014 Foo Inc.
+ * @license MIT License
+ * @link http://example.com
+ */
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Multiple category tags.</summary>
+
+                                        <pre><code>&lt;?php
+/**
+ * Short description here.
+ *
+ * PHP version 5
+ *
+ * @category Foo
+ * @category Bar
+ * @package Foo_Helpers
+ * @author Marty McFly &lt;mmcfly@example.com&gt;
+ * @copyright 2013-2014 Foo Inc.
+ * @license MIT License
+ * @link http://example.com
+ */
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: PHP version specified.</summary>
+
+                                        <pre><code>&lt;?php
+/**
+ * Short description here.
+ *
+ * PHP version 5
+ *
+ * @category Foo
+ * @package Foo_Helpers
+ * @author Marty McFly &lt;mmcfly@example.com&gt;
+ * @copyright 2013-2014 Foo Inc.
+ * @license MIT License
+ * @link http://example.com
+ */
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Category and package tags are swapped in order.</summary>
+
+                                        <pre><code>&lt;?php
+/**
+ * Short description here.
+ *
+ * PHP version 5
+ *
+ * @package Foo_Helpers
+ * @category Foo
+ * @author Marty McFly &lt;mmcfly@example.com&gt;
+ * @copyright 2013-2014 Foo Inc.
+ * @license MIT License
+ * @link http://example.com
+ */
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Tags are in the correct order.</summary>
+
+                                        <pre><code>&lt;?php
+/**
+ * Short description here.
+ *
+ * PHP version 5
+ *
+ * @category Foo
+ * @package Foo_Helpers
+ * @author Marty McFly &lt;mmcfly@example.com&gt;
+ * @copyright 2013-2014 Foo Inc.
+ * @license MIT License
+ * @link http://example.com
+ */
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: No php version specified.</summary>
+
+                                        <pre><code>&lt;?php
+/**
+ * Short description here.
+ *
+ * @category Foo
+ * @package Foo_Helpers
+ * @author Marty McFly &lt;mmcfly@example.com&gt;
+ * @copyright 2013-2014 Foo Inc.
+ * @license MIT License
+ * @link http://example.com
+ */
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="PEAR.Commenting.FunctionComment">Function Comments (PEAR.Commenting.FunctionComment)</h4></summary>
+
+                        <p>Functions must have a non-empty doc comment.  The short description must be on the second line of the comment.  Each description must have one blank comment line before and after.  There must be one blank line before the tags in the comments.  There must be a tag for each of the parameters in the right order with the right variable names with a comment.  There must be a return tag.  Any throw tag must have an exception class.</p>
+
+                        <div><details>
+                                        <summary>Valid: A function doc comment is used.</summary>
+
+                                        <pre><code>/**
+ * Short description here.
+ *
+ * @return void
+ */
+ function foo()
+ {
+ }
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: No doc comment for the function.</summary>
+
+                                        <pre><code> function foo()
+ {
+ }
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Short description is the second line of the comment.</summary>
+
+                                        <pre><code>/**
+ * Short description here.
+ *
+ * @return void
+ */
+ function foo()
+ {
+ }
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: An extra blank line before the short description.</summary>
+
+                                        <pre><code>/**
+ * 
+ * Short description here.
+ *
+ * @return void
+ */
+ function foo()
+ {
+ }
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Exactly one blank line around descriptions.</summary>
+
+                                        <pre><code>/**
+ * Short description here.
+ * 
+ * Long description here.
+ * 
+ * @return void
+ */
+ function foo()
+ {
+ }
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Extra blank lines around the descriptions.</summary>
+
+                                        <pre><code>/**
+ * Short description here.
+ * 
+ * 
+ * Long description here.
+ * 
+ * 
+ * @return void
+ */
+ function foo()
+ {
+ }
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Exactly one blank line before the tags.</summary>
+
+                                        <pre><code>/**
+ * Short description here.
+ *
+ * Long description here.
+ * 
+ * @return void
+ */
+ function foo()
+ {
+ }
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Extra blank lines before the tags.</summary>
+
+                                        <pre><code>/**
+ * Short description here.
+ *
+ * Long description here.
+ * 
+ * 
+ * @return void
+ */
+ function foo()
+ {
+ }
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Throws tag has an exception class.</summary>
+
+                                        <pre><code>/**
+ * Short description here.
+ *
+ * @return void
+ * @throws FooException
+ */
+ function foo()
+ {
+ }
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: No exception class given for throws tag.</summary>
+
+                                        <pre><code>/**
+ * Short description here.
+ *
+ * @return void
+ * @throws
+ */
+ function foo()
+ {
+ }
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Return tag present.</summary>
+
+                                        <pre><code>/**
+ * Short description here.
+ *
+ * @return void
+ */
+ function foo()
+ {
+ }
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: No return tag.</summary>
+
+                                        <pre><code>/**
+ * Short description here.
+ */
+ function foo()
+ {
+ }
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Param names are correct.</summary>
+
+                                        <pre><code>/**
+ * Short description here.
+ *
+ * @param string $foo Foo parameter
+ * @param string $bar Bar parameter
+ * @return void
+ */
+ function foo($foo, $bar)
+ {
+ }
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Wrong parameter name doesn&#39;t match function signature.</summary>
+
+                                        <pre><code>/**
+ * Short description here.
+ *
+ * @param string $foo Foo parameter
+ * @param string $qux Bar parameter
+ * @return void
+ */
+ function foo($foo, $bar)
+ {
+ }
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Param names are ordered correctly.</summary>
+
+                                        <pre><code>/**
+ * Short description here.
+ *
+ * @param string $foo Foo parameter
+ * @param string $bar Bar parameter
+ * @return void
+ */
+ function foo($foo, $bar)
+ {
+ }
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Wrong parameter order.</summary>
+
+                                        <pre><code>/**
+ * Short description here.
+ *
+ * @param string $bar Bar parameter
+ * @param string $foo Foo parameter
+ * @return void
+ */
+ function foo($foo, $bar)
+ {
+ }
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="PEAR.Commenting.InlineComment">Inline Comments (PEAR.Commenting.InlineComment)</h4></summary>
+
+                        <p>Perl-style # comments are not allowed.</p>
+
+                        <div><details>
+                                        <summary>Valid: A // style comment.</summary>
+
+                                        <pre><code>// A comment.
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: A # style comment.</summary>
+
+                                        <pre><code># A comment.
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="PEAR.ControlStructures.ControlSignature">Control Structure Signatures (PEAR.ControlStructures.ControlSignature)</h4></summary>
+
+                        <p>Control structures should use one space around the parentheses in conditions.  The opening brace should be preceded by one space and should be at the end of the line.</p>
+
+                        <div><details>
+                                        <summary>Valid: Correct spacing around the condition.</summary>
+
+                                        <pre><code>if ($foo) {
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Incorrect spacing around the condition.</summary>
+
+                                        <pre><code>if($foo){
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Correct placement of the opening brace.</summary>
+
+                                        <pre><code>if ($foo) {
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Incorrect placement of the opening brace on a new line.</summary>
+
+                                        <pre><code>if ($foo)
+{
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="PEAR.ControlStructures.MultiLineCondition">Multi-line If Conditions (PEAR.ControlStructures.MultiLineCondition)</h4></summary>
+
+                        <p>Multi-line if conditions should be indented one level and each line should begin with a boolean operator.  The end parenthesis should be on a new line.</p>
+
+                        <div><details>
+                                        <summary>Valid: Correct indentation.</summary>
+
+                                        <pre><code>if ($foo
+    &amp;&amp; $bar
+) {
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: No indentation used on the condition lines.</summary>
+
+                                        <pre><code>if ($foo
+&amp;&amp; $bar
+) {
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Boolean operator at the start of the line.</summary>
+
+                                        <pre><code>if ($foo
+    &amp;&amp; $bar
+) {
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Boolean operator at the end of the line.</summary>
+
+                                        <pre><code>if ($foo &amp;&amp;
+    $bar
+) {
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: End parenthesis on a new line.</summary>
+
+                                        <pre><code>if ($foo
+    &amp;&amp; $bar
+) {
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: End parenthesis not moved to a new line.</summary>
+
+                                        <pre><code>if ($foo
+    &amp;&amp; $bar) {
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="PEAR.Files.IncludingFile">Including Code (PEAR.Files.IncludingFile)</h4></summary>
+
+                        <p>Note that &lt;em&gt;include_once&lt;/em&gt; and &lt;em&gt;require_once&lt;/em&gt; are statements, not functions. Parentheses should not surround the subject filename.</p>
+
+                        <div><details>
+                                        <summary>Valid: used as statement</summary>
+
+                                        <pre><code>require_once &#39;PHP/CodeSniffer.php&#39;;
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: used as function</summary>
+
+                                        <pre><code>require_once(&#39;PHP/CodeSniffer.php&#39;);
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="PEAR.Files.LineLength">Line Length (PEAR.Files.LineLength)</h4></summary>
+
+                        <p>It is recommended to keep lines at approximately 85 characters long for better code readability.</p>
+
+                        <div></div>
+                    </div><div>
+                        <summary><h4 id="PEAR.Formatting.MultiLineAssignment">Multi-Line Assignment (PEAR.Formatting.MultiLineAssignment)</h4></summary>
+
+                        <p>Multi-line assignment should have the equals sign be the first item on the second line indented correctly.</p>
+
+                        <div><details>
+                                        <summary>Valid: Assignment operator at the start of the second line.</summary>
+
+                                        <pre><code>$foo
+    = $bar;
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Assignment operator at end of first line.</summary>
+
+                                        <pre><code>$foo =
+    $bar;
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Assignment operator indented one level.</summary>
+
+                                        <pre><code>$foo
+    = $bar;
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Assignment operator not indented.</summary>
+
+                                        <pre><code>$foo
+= $bar;
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="PEAR.Functions.FunctionCallSignature">Function Calls (PEAR.Functions.FunctionCallSignature)</h4></summary>
+
+                        <p>Functions should be called with no spaces between the function name, the opening parenthesis, and the first parameter; and no space between the last parameter, the closing parenthesis, and the semicolon.</p>
+
+                        <div><details>
+                                        <summary>Valid: spaces between parameters</summary>
+
+                                        <pre><code>$var = foo($bar, $baz, $quux);
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: additional spaces used</summary>
+
+                                        <pre><code>$var = foo ( $bar, $baz, $quux ) ;
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="PEAR.Functions.FunctionDeclaration">Function Declarations (PEAR.Functions.FunctionDeclaration)</h4></summary>
+
+                        <p>There should be exactly 1 space after the function keyword and 1 space on each side of the use keyword.  Closures should use the Kernighan/Ritchie Brace style and other single-line functions should use the BSD/Allman style.  Multi-line function declarations should have the parameter lists indented one level with the closing parenthesis on a newline followed by a single space and the opening brace of the function.</p>
+
+                        <div><details>
+                                        <summary>Valid: Correct spacing around function and use keywords.</summary>
+
+                                        <pre><code>$foo = function () use ($bar) {
+};
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: No spacing around function and use keywords.</summary>
+
+                                        <pre><code>$foo = function()use($bar){
+};
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Multi-line function declaration formatted properly.</summary>
+
+                                        <pre><code>function foo(
+    $bar,
+    $baz
+) {
+};
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Invalid indentation and formatting of closing parenthesis.</summary>
+
+                                        <pre><code>function foo(
+$bar,
+$baz)
+{
+};
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="PEAR.Functions.ValidDefaultValue">Default Values in Function Declarations (PEAR.Functions.ValidDefaultValue)</h4></summary>
+
+                        <p>Arguments with default values go at the end of the argument list.</p>
+
+                        <div><details>
+                                        <summary>Valid: argument with default value at end of declaration</summary>
+
+                                        <pre><code>function connect($dsn, $persistent = false)
+{
+    ...
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: argument with default value at start of declaration</summary>
+
+                                        <pre><code>function connect($persistent = false, $dsn)
+{
+    ...
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="PEAR.NamingConventions.ValidClassName">Class Names (PEAR.NamingConventions.ValidClassName)</h4></summary>
+
+                        <p>Classes should be given descriptive names. Avoid using abbreviations where possible. Class names should always begin with an uppercase letter. The PEAR class hierarchy is also reflected in the class name, each level of the hierarchy separated with a single underscore.</p>
+
+                        <div><details>
+                                        <summary>Examples of valid class names</summary>
+
+                                        <pre><code>Log
+Net_Finger
+HTML_Upload_Error
+</code></pre>
+                                    </details><details>
+                                        <summary>Examples of invalid class names</summary>
+
+                                        <pre><code>log
+NetFinger
+HTML-Upload-Error
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="PEAR.NamingConventions.ValidFunctionName">Function and Method Names (PEAR.NamingConventions.ValidFunctionName)</h4></summary>
+
+                        <p>Functions and methods should be named using the &#34;studly caps&#34; style (also referred to as &#34;bumpy case&#34; or &#34;camel caps&#34;). Functions should in addition have the package name as a prefix, to avoid name collisions between packages. The initial letter of the name (after the prefix) is lowercase, and each letter that starts a new &#34;word&#34; is capitalized.</p>
+
+                        <div><details>
+                                        <summary>Examples of valid function names</summary>
+
+                                        <pre><code>connect()
+getData()
+buildSomeWidget()
+XML_RPC_serializeData()
+</code></pre>
+                                    </details><details>
+                                        <summary>Examples of invalid function names</summary>
+
+                                        <pre><code>Connect()
+get_data()
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="PEAR.NamingConventions.ValidVariableName">Variable Names (PEAR.NamingConventions.ValidVariableName)</h4></summary>
+
+                        <p>Private member variable names should be prefixed with an underscore and public/protected variable names should not.</p>
+
+                        <div><details>
+                                        <summary>Valid: Proper member variable names.</summary>
+
+                                        <pre><code>class Foo
+{
+    public $publicVar;
+    protected $protectedVar;
+    private $_privateVar;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: underscores used on public/protected variables and not used on private variables.</summary>
+
+                                        <pre><code>class Foo
+{
+    public $_publicVar;
+    protected $_protectedVar;
+    private $privateVar;
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="PEAR.WhiteSpace.ObjectOperatorIndent">Object Operator Indentation (PEAR.WhiteSpace.ObjectOperatorIndent)</h4></summary>
+
+                        <p>Chained object operators when spread out over multiple lines should be the first thing on the line and be indented by 1 level.</p>
+
+                        <div><details>
+                                        <summary>Valid: Object operator at the start of a new line.</summary>
+
+                                        <pre><code>$foo
+    -&gt;bar()
+    -&gt;baz();
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Object operator at the end of the line.</summary>
+
+                                        <pre><code>$foo-&gt;
+    bar()-&gt;
+    baz();
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Object operator indented correctly.</summary>
+
+                                        <pre><code>$foo
+    -&gt;bar()
+    -&gt;baz();
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Object operator not indented correctly.</summary>
+
+                                        <pre><code>$foo
+-&gt;bar()
+-&gt;baz();
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="PEAR.WhiteSpace.ScopeClosingBrace">Closing Brace Indentation (PEAR.WhiteSpace.ScopeClosingBrace)</h4></summary>
+
+                        <p>Closing braces should be indented at the same level as the beginning of the scope.</p>
+
+                        <div><details>
+                                        <summary>Valid: Consistent indentation level for scope.</summary>
+
+                                        <pre><code>if ($test) {
+    $var = 1;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: The ending brace is indented further than the if statement.</summary>
+
+                                        <pre><code>if ($test) {
+    $var = 1;
+    }
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="PEAR.WhiteSpace.ScopeIndent">Scope Indentation (PEAR.WhiteSpace.ScopeIndent)</h4></summary>
+
+                        <p>Any scope openers except for switch statements should be indented 1 level.  This includes classes, functions, and control structures.</p>
+
+                        <div><details>
+                                        <summary>Valid: Consistent indentation level for scope.</summary>
+
+                                        <pre><code>function foo()
+{
+    if ($test) {
+        $var = 1;
+    }
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Indentation is not used for scope.</summary>
+
+                                        <pre><code>function foo()
+{
+if ($test) {
+$var = 1;
+}
+}
+</code></pre>
+                                    </details></div>
+                    </div></table>
+        </details>
+
+        <details>
+            <summary><h3>References</h3></summary>
+
+            <table><tr>
+                    <td><a href="#Generic.Functions.FunctionCallArgumentSpacing">Generic.Functions.FunctionCallArgumentSpacing</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.NamingConventions.UpperCaseConstantName">Generic.NamingConventions.UpperCaseConstantName</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.PHP.LowerCaseConstant">Generic.PHP.LowerCaseConstant</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.PHP.DisallowShortOpenTag">Generic.PHP.DisallowShortOpenTag</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.WhiteSpace.DisallowTabIndent">Generic.WhiteSpace.DisallowTabIndent</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.Commenting.DocComment">Generic.Commenting.DocComment</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.Commenting.DocCommentAlignment">Squiz.Commenting.DocCommentAlignment</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.Files.LineLength">Generic.Files.LineLength</a></td>
+                    <td>{[{lineLimit 85} {absoluteLineLimit 0}]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.Files.LineEndings">Generic.Files.LineEndings</a></td>
+                    <td>{[{eolChar \n}]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma">Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.ControlStructures.InlineControlStructure">Generic.ControlStructures.InlineControlStructure</a></td>
+                    <td>{[{error false}]}</td>
+                </tr></table>
+        </details>
+
+    </section><section class="rule-sets"><h2 id="squizlabs/PHP_CodeSniffer/PSR1">PSR1</h2>
+        <p class="subtitle"><a href="https://github.com/squizlabs/PHP_CodeSniffer.git" target="_blank">https://github.com/squizlabs/PHP_CodeSniffer.git</a></p>
+
+        <details>
+            <summary><h3>Rules</h3></summary>
+
+            <table><div>
+                        <summary><h4 id="PSR1.Classes.ClassDeclaration">Class Declaration (PSR1.Classes.ClassDeclaration)</h4></summary>
+
+                        <p>Each class must be in a file by itself and must be under a namespace (a top-level vendor name).</p>
+
+                        <div><details>
+                                        <summary>Valid: One class in a file.</summary>
+
+                                        <pre><code>&lt;?php
+namespace Foo;
+
+class Bar {
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Multiple classes in a single file.</summary>
+
+                                        <pre><code>&lt;?php
+namespace Foo;
+
+class Bar {
+}
+
+class Baz {
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: A vendor-level namespace is used.</summary>
+
+                                        <pre><code>&lt;?php
+namespace Foo;
+
+class Bar {
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: No namespace used in file.</summary>
+
+                                        <pre><code>&lt;?php
+class Bar {
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="PSR1.Files.SideEffects">Side Effects (PSR1.Files.SideEffects)</h4></summary>
+
+                        <p>A php file should either contain declarations with no side effects, or should just have logic (including side effects) with no declarations.</p>
+
+                        <div><details>
+                                        <summary>Valid: A class defined in a file by itself.</summary>
+
+                                        <pre><code>&lt;?php
+class Foo
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: A class defined in a file with other code.</summary>
+
+                                        <pre><code>&lt;?php
+class Foo
+{
+}
+
+echo &#34;Class Foo loaded.&#34;
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="PSR1.Methods.CamelCapsMethodName">Method Name (PSR1.Methods.CamelCapsMethodName)</h4></summary>
+
+                        <p>Method names MUST be declared in camelCase.</p>
+
+                        <div><details>
+                                        <summary>Valid: method name in camelCase.</summary>
+
+                                        <pre><code>class Foo
+{
+    private function doBar()
+    {
+    }
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: method name not in camelCase.</summary>
+
+                                        <pre><code>class Foo
+{
+    private function do_bar()
+    {
+    }
+}
+</code></pre>
+                                    </details></div>
+                    </div></table>
+        </details>
+
+        <details>
+            <summary><h3>References</h3></summary>
+
+            <table><tr>
+                    <td><a href="#Generic.PHP.DisallowAlternativePHPTags">Generic.PHP.DisallowAlternativePHPTags</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.PHP.DisallowShortOpenTag">Generic.PHP.DisallowShortOpenTag</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.PHP.DisallowShortOpenTag.EchoFound">Generic.PHP.DisallowShortOpenTag.EchoFound</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.Files.ByteOrderMark">Generic.Files.ByteOrderMark</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.Classes.ValidClassName">Squiz.Classes.ValidClassName</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.NamingConventions.UpperCaseConstantName">Generic.NamingConventions.UpperCaseConstantName</a></td>
+                    <td>{[]}</td>
+                </tr></table>
+        </details>
+
+    </section><section class="rule-sets"><h2 id="squizlabs/PHP_CodeSniffer/PSR12">PSR12</h2>
+        <p class="subtitle"><a href="https://github.com/squizlabs/PHP_CodeSniffer.git" target="_blank">https://github.com/squizlabs/PHP_CodeSniffer.git</a></p>
+
+        <details>
+            <summary><h3>Rules</h3></summary>
+
+            <table><div>
+                        <summary><h4 id="PSR12.Classes.ClassInstantiation">Class Instantiation (PSR12.Classes.ClassInstantiation)</h4></summary>
+
+                        <p>When instantiating a new class, parenthesis MUST always be present even when there are no arguments passed to the constructor.</p>
+
+                        <div><details>
+                                        <summary>Valid: Parenthesis used.</summary>
+
+                                        <pre><code>new Foo();
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Parenthesis not used.</summary>
+
+                                        <pre><code>new Foo;
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="PSR12.Functions.NullableTypeDeclaration">Nullable Type Declarations Functions (PSR12.Functions.NullableTypeDeclaration)</h4></summary>
+
+                        <p>In nullable type declarations there MUST NOT be a space between the question mark and the type.</p>
+
+                        <div><details>
+                                        <summary>Valid: no whitespace used.</summary>
+
+                                        <pre><code>
+            
+public function functionName(
+    ?string $arg1,
+    ?int $arg2
+): ?string {
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: superfluous whitespace used.</summary>
+
+                                        <pre><code>public function functionName(
+    ? string $arg1,
+    ? int $arg2
+): ? string {
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: no unexpected characters.</summary>
+
+                                        <pre><code>
+            
+public function foo(?int $arg): ?string
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: unexpected characters used.</summary>
+
+                                        <pre><code>
+            
+public function bar(? /* comment */ int $arg): ?
+    // nullable for a reason
+    string
+{
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="PSR12.Keywords.ShortFormTypeKeywords">Short Form Type Keywords (PSR12.Keywords.ShortFormTypeKeywords)</h4></summary>
+
+                        <p>Short form of type keywords MUST be used i.e. bool instead of boolean, int instead of integer etc.</p>
+
+                        <div><details>
+                                        <summary>Valid: Short form type used.</summary>
+
+                                        <pre><code>$foo = (bool) $isValid;
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Long form type type used.</summary>
+
+                                        <pre><code>$foo = (boolean) $isValid;
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="PSR12.Namespaces.CompoundNamespaceDepth">Compound Namespace Depth (PSR12.Namespaces.CompoundNamespaceDepth)</h4></summary>
+
+                        <p>Compound namespaces with a depth of more than two MUST NOT be used.</p>
+
+                        <div><details>
+                                        <summary>Valid: Max depth of 2.</summary>
+
+                                        <pre><code>use Vendor\Package\SomeNamespace\{
+    SubnamespaceOne\ClassA,
+    SubnamespaceOne\ClassB,
+    SubnamespaceTwo\ClassY,
+    ClassZ,
+};
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Max depth of 3.</summary>
+
+                                        <pre><code>use Vendor\Package\SomeNamespace\{
+    SubnamespaceOne\AnotherNamespace\ClassA,
+    SubnamespaceOne\ClassB,
+    ClassZ,
+};
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="PSR12.Operators.OperatorSpacing">Operator Spacing (PSR12.Operators.OperatorSpacing)</h4></summary>
+
+                        <p>All binary and ternary (but not unary) operators MUST be preceded and followed by at least one space. This includes all arithmetic, comparison, assignment, bitwise, logical (excluding ! which is unary), string concatenation, type operators, trait operators (insteadof and as), and the single pipe operator (e.g. ExceptionType1 | ExceptionType2 $e).</p>
+
+                        <div><details>
+                                        <summary>Valid: At least 1 space used.</summary>
+
+                                        <pre><code>if ($a === $b) {
+    $foo = $bar ?? $a ?? $b;
+} elseif ($a &gt; $b) {
+    $variable = $foo ? &#39;foo&#39; : &#39;bar&#39;;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: No spacing used.</summary>
+
+                                        <pre><code>if ($a===$b) {
+    $foo=$bar??$a??$b;
+} elseif ($a&gt;$b) {
+    $variable=$foo?&#39;foo&#39;:&#39;bar&#39;;
+}
+</code></pre>
+                                    </details></div>
+                    </div></table>
+        </details>
+
+        <details>
+            <summary><h3>References</h3></summary>
+
+            <table><tr>
+                    <td><a href="#PSR1">PSR1</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.Files.LineEndings">Generic.Files.LineEndings</a></td>
+                    <td>{[{eolChar \n}]}</td>
+                </tr><tr>
+                    <td><a href="#PSR2.Files.EndFileNewline">PSR2.Files.EndFileNewline</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#PSR2.Files.ClosingTag">PSR2.Files.ClosingTag</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.Files.LineLength">Generic.Files.LineLength</a></td>
+                    <td>{[{lineLimit 120} {absoluteLineLimit 0}]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.WhiteSpace.SuperfluousWhitespace">Squiz.WhiteSpace.SuperfluousWhitespace</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.WhiteSpace.SuperfluousWhitespace.StartFile">Squiz.WhiteSpace.SuperfluousWhitespace.StartFile</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.WhiteSpace.SuperfluousWhitespace.EndFile">Squiz.WhiteSpace.SuperfluousWhitespace.EndFile</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.WhiteSpace.SuperfluousWhitespace.EmptyLines">Squiz.WhiteSpace.SuperfluousWhitespace.EmptyLines</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.Formatting.DisallowMultipleStatements">Generic.Formatting.DisallowMultipleStatements</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.WhiteSpace.ScopeIndent">Generic.WhiteSpace.ScopeIndent</a></td>
+                    <td>{[{ignoreIndentationTokens }]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.WhiteSpace.DisallowTabIndent">Generic.WhiteSpace.DisallowTabIndent</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.PHP.LowerCaseKeyword">Generic.PHP.LowerCaseKeyword</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.PHP.LowerCaseConstant">Generic.PHP.LowerCaseConstant</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.PHP.LowerCaseType">Generic.PHP.LowerCaseType</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#PSR2.Classes.ClassDeclaration">PSR2.Classes.ClassDeclaration</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#PSR2.Classes.PropertyDeclaration">PSR2.Classes.PropertyDeclaration</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.Scope.MethodScope">Squiz.Scope.MethodScope</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.WhiteSpace.ScopeKeywordSpacing">Squiz.WhiteSpace.ScopeKeywordSpacing</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#PSR2.Methods.MethodDeclaration">PSR2.Methods.MethodDeclaration</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#PSR2.Methods.MethodDeclaration.Underscore">PSR2.Methods.MethodDeclaration.Underscore</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#PSR2.Methods.FunctionClosingBrace">PSR2.Methods.FunctionClosingBrace</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.Functions.FunctionDeclaration">Squiz.Functions.FunctionDeclaration</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.Functions.LowercaseFunctionKeywords">Squiz.Functions.LowercaseFunctionKeywords</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.Functions.FunctionDeclarationArgumentSpacing">Squiz.Functions.FunctionDeclarationArgumentSpacing</a></td>
+                    <td>{[{equalsSpacing 1}]}</td>
+                </tr><tr>
+                    <td><a href="#PEAR.Functions.ValidDefaultValue">PEAR.Functions.ValidDefaultValue</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.Functions.MultiLineFunctionDeclaration">Squiz.Functions.MultiLineFunctionDeclaration</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.Functions.FunctionCallArgumentSpacing">Generic.Functions.FunctionCallArgumentSpacing</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#PSR2.Methods.FunctionCallSignature">PSR2.Methods.FunctionCallSignature</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#PSR2.Methods.FunctionCallSignature.SpaceAfterCloseBracket">PSR2.Methods.FunctionCallSignature.SpaceAfterCloseBracket</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#PSR2.Methods.FunctionCallSignature.OpeningIndent">PSR2.Methods.FunctionCallSignature.OpeningIndent</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.ControlStructures.ControlSignature">Squiz.ControlStructures.ControlSignature</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.WhiteSpace.ControlStructureSpacing.SpacingAfterOpen">Squiz.WhiteSpace.ControlStructureSpacing.SpacingAfterOpen</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.WhiteSpace.ControlStructureSpacing.SpacingBeforeClose">Squiz.WhiteSpace.ControlStructureSpacing.SpacingBeforeClose</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.WhiteSpace.ScopeClosingBrace">Squiz.WhiteSpace.ScopeClosingBrace</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.ControlStructures.ForEachLoopDeclaration">Squiz.ControlStructures.ForEachLoopDeclaration</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.ControlStructures.ForLoopDeclaration">Squiz.ControlStructures.ForLoopDeclaration</a></td>
+                    <td>{[{ignoreNewlines true}]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.ControlStructures.ForLoopDeclaration.SpacingAfterOpen">Squiz.ControlStructures.ForLoopDeclaration.SpacingAfterOpen</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.ControlStructures.ForLoopDeclaration.SpacingBeforeClose">Squiz.ControlStructures.ForLoopDeclaration.SpacingBeforeClose</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.ControlStructures.LowercaseDeclaration">Squiz.ControlStructures.LowercaseDeclaration</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.ControlStructures.InlineControlStructure">Generic.ControlStructures.InlineControlStructure</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.ControlStructures.ForEachLoopDeclaration.AsNotLower">Squiz.ControlStructures.ForEachLoopDeclaration.AsNotLower</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#PSR2.ControlStructures.ElseIfDeclaration">PSR2.ControlStructures.ElseIfDeclaration</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#PSR2.ControlStructures.SwitchDeclaration">PSR2.ControlStructures.SwitchDeclaration</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.ControlStructures.ForEachLoopDeclaration.SpaceAfterOpen">Squiz.ControlStructures.ForEachLoopDeclaration.SpaceAfterOpen</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.ControlStructures.ForEachLoopDeclaration.SpaceBeforeClose">Squiz.ControlStructures.ForEachLoopDeclaration.SpaceBeforeClose</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.WhiteSpace.IncrementDecrementSpacing">Generic.WhiteSpace.IncrementDecrementSpacing</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.WhiteSpace.CastSpacing">Squiz.WhiteSpace.CastSpacing</a></td>
+                    <td>{[]}</td>
+                </tr></table>
+        </details>
+
+    </section><section class="rule-sets"><h2 id="squizlabs/PHP_CodeSniffer/PSR2">PSR2</h2>
+        <p class="subtitle"><a href="https://github.com/squizlabs/PHP_CodeSniffer.git" target="_blank">https://github.com/squizlabs/PHP_CodeSniffer.git</a></p>
+
+        <details>
+            <summary><h3>Rules</h3></summary>
+
+            <table><div>
+                        <summary><h4 id="PSR2.Classes.ClassDeclaration">Class Declarations (PSR2.Classes.ClassDeclaration)</h4></summary>
+
+                        <p>There should be exactly 1 space between the abstract or final keyword and the class keyword and between the class keyword and the class name.  The extends and implements keywords, if present, must be on the same line as the class name.  When interfaces implemented are spread over multiple lines, there should be exactly 1 interface mentioned per line indented by 1 level.  The closing brace of the class must go on the first line after the body of the class and must be on a line by itself.</p>
+
+                        <div><details>
+                                        <summary>Valid: Correct spacing around class keyword.</summary>
+
+                                        <pre><code>abstract class Foo
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: 2 spaces used around class keyword.</summary>
+
+                                        <pre><code>abstract  class  Foo
+{
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="PSR2.Classes.PropertyDeclaration">Property Declarations (PSR2.Classes.PropertyDeclaration)</h4></summary>
+
+                        <p>Property names should not be prefixed with an underscore to indicate visibility.  Visibility should be used to declare properties rather than the var keyword.  Only one property should be declared within a statement.  The static declaration must come after the visibility declaration.</p>
+
+                        <div><details>
+                                        <summary>Valid: Correct property naming.</summary>
+
+                                        <pre><code>class Foo
+{
+    private $bar;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: An underscore prefix used to indicate visibility.</summary>
+
+                                        <pre><code>class Foo
+{
+    private $_bar;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Visibility of property declared.</summary>
+
+                                        <pre><code>class Foo
+{
+    private $bar;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Var keyword used to declare property.</summary>
+
+                                        <pre><code>class Foo
+{
+    var $bar;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: One property declared per statement.</summary>
+
+                                        <pre><code>class Foo
+{
+    private $bar;
+    private $baz;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Multiple properties declared in one statement.</summary>
+
+                                        <pre><code>class Foo
+{
+    private $bar, $baz;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: If declared as static, the static declaration must come after the visibility declaration.</summary>
+
+                                        <pre><code>class Foo
+{
+    public static $bar;
+    private $baz;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Static declaration before the visibility declaration.</summary>
+
+                                        <pre><code>class Foo
+{
+    static protected $bar;
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="PSR2.ControlStructures.ControlStructureSpacing">Control Structure Spacing (PSR2.ControlStructures.ControlStructureSpacing)</h4></summary>
+
+                        <p>Control Structures should have 0 spaces after opening parentheses and 0 spaces before closing parentheses.</p>
+
+                        <div><details>
+                                        <summary>Valid: Correct spacing.</summary>
+
+                                        <pre><code>if ($foo) {
+    $var = 1;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Whitespace used inside the parentheses.</summary>
+
+                                        <pre><code>if ( $foo ) {
+    $var = 1;
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="PSR2.ControlStructures.ElseIfDeclaration">Elseif Declarations (PSR2.ControlStructures.ElseIfDeclaration)</h4></summary>
+
+                        <p>PHP&#39;s elseif keyword should be used instead of else if.</p>
+
+                        <div><details>
+                                        <summary>Valid: Single word elseif keyword used.</summary>
+
+                                        <pre><code>if ($foo) {
+    $var = 1;
+} elseif ($bar) {
+    $var = 2;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Separate else and if keywords used.</summary>
+
+                                        <pre><code>if ($foo) {
+    $var = 1;
+} else if ($bar) {
+    $var = 2;
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="PSR2.ControlStructures.SwitchDeclaration">Switch Declarations (PSR2.ControlStructures.SwitchDeclaration)</h4></summary>
+
+                        <p>Case statements should be indented 4 spaces from the switch keyword.  It should also be followed by a space.  Colons in switch declarations should not be preceded by whitespace.  Break statements should be indented 4 more spaces from the case statement.  There must be a comment when falling through from one case into the next.</p>
+
+                        <div><details>
+                                        <summary>Valid: Case statement indented correctly.</summary>
+
+                                        <pre><code>switch ($foo) {
+    case &#39;bar&#39;:
+        break;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Case statement not indented 4 spaces.</summary>
+
+                                        <pre><code>switch ($foo) {
+case &#39;bar&#39;:
+    break;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Case statement followed by 1 space.</summary>
+
+                                        <pre><code>switch ($foo) {
+    case &#39;bar&#39;:
+        break;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Case statement not followed by 1 space.</summary>
+
+                                        <pre><code>switch ($foo) {
+    case&#39;bar&#39;:
+        break;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Colons not prefixed by whitespace.</summary>
+
+                                        <pre><code>switch ($foo) {
+    case &#39;bar&#39;:
+        break;
+    default:
+        break;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Colons prefixed by whitespace.</summary>
+
+                                        <pre><code>switch ($foo) {
+    case &#39;bar&#39; :
+        break;
+    default :
+        break;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Break statement indented correctly.</summary>
+
+                                        <pre><code>switch ($foo) {
+    case &#39;bar&#39;:
+        break;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Break statement not indented 4 spaces.</summary>
+
+                                        <pre><code>switch ($foo) {
+    case &#39;bar&#39;:
+    break;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Comment marking intentional fall-through.</summary>
+
+                                        <pre><code>switch ($foo) {
+    case &#39;bar&#39;:
+    // no break
+    default:
+        break;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: No comment marking intentional fall-through.</summary>
+
+                                        <pre><code>switch ($foo) {
+    case &#39;bar&#39;:
+    default:
+        break;
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="PSR2.Files.EndFileNewline">End File Newline (PSR2.Files.EndFileNewline)</h4></summary>
+
+                        <p>PHP Files should end with exactly one newline.</p>
+
+                        <div></div>
+                    </div><div>
+                        <summary><h4 id="PSR2.Methods.MethodDeclaration">Method Declarations (PSR2.Methods.MethodDeclaration)</h4></summary>
+
+                        <p>Method names should not be prefixed with an underscore to indicate visibility.  The static keyword, when present, should come after the visibility declaration, and the final and abstract keywords should come before.</p>
+
+                        <div><details>
+                                        <summary>Valid: Correct method naming.</summary>
+
+                                        <pre><code>class Foo
+{
+    private function bar()
+    {
+    }
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: An underscore prefix used to indicate visibility.</summary>
+
+                                        <pre><code>class Foo
+{
+    private function _bar()
+    {
+    }
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Correct ordering of method prefixes.</summary>
+
+                                        <pre><code>class Foo
+{
+    final public static function bar()
+    {
+    }
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: static keyword used before visibility and final used after.</summary>
+
+                                        <pre><code>class Foo
+{
+    static public final function bar()
+    {
+    }
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="PSR2.Namespaces.NamespaceDeclaration">Namespace Declarations (PSR2.Namespaces.NamespaceDeclaration)</h4></summary>
+
+                        <p>There must be one blank line after the namespace declaration.</p>
+
+                        <div><details>
+                                        <summary>Valid: One blank line after the namespace declaration.</summary>
+
+                                        <pre><code>namespace \Foo\Bar;
+
+use \Baz;
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: No blank line after the namespace declaration.</summary>
+
+                                        <pre><code>namespace \Foo\Bar;
+use \Baz;
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="PSR2.Namespaces.UseDeclaration">Namespace Declarations (PSR2.Namespaces.UseDeclaration)</h4></summary>
+
+                        <p>Each use declaration must contain only one namespace and must come after the first namespace declaration.  There should be one blank line after the final use statement.</p>
+
+                        <div><details>
+                                        <summary>Valid: One use declaration per namespace.</summary>
+
+                                        <pre><code>use \Foo;
+use \Bar;
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Multiple namespaces in a use declaration.</summary>
+
+                                        <pre><code>use \Foo, \Bar;
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Use statements come after first namespace.</summary>
+
+                                        <pre><code>namespace \Foo;
+
+use \Bar;
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Namespace declared after use.</summary>
+
+                                        <pre><code>use \Bar;
+
+namespace \Foo;
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: A single blank line after the final use statement.</summary>
+
+                                        <pre><code>use \Foo;
+use \Bar;
+
+class Baz
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: No blank line after the final use statement.</summary>
+
+                                        <pre><code>use \Foo;
+use \Bar;
+class Baz
+{
+}
+</code></pre>
+                                    </details></div>
+                    </div></table>
+        </details>
+
+        <details>
+            <summary><h3>References</h3></summary>
+
+            <table><tr>
+                    <td><a href="#PSR1">PSR1</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.Files.LineEndings">Generic.Files.LineEndings</a></td>
+                    <td>{[{eolChar \n}]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.Files.LineLength">Generic.Files.LineLength</a></td>
+                    <td>{[{lineLimit 120} {absoluteLineLimit 0}]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.WhiteSpace.SuperfluousWhitespace">Squiz.WhiteSpace.SuperfluousWhitespace</a></td>
+                    <td>{[{ignoreBlankLines true}]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.WhiteSpace.SuperfluousWhitespace.StartFile">Squiz.WhiteSpace.SuperfluousWhitespace.StartFile</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.WhiteSpace.SuperfluousWhitespace.EndFile">Squiz.WhiteSpace.SuperfluousWhitespace.EndFile</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.WhiteSpace.SuperfluousWhitespace.EmptyLines">Squiz.WhiteSpace.SuperfluousWhitespace.EmptyLines</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.Formatting.DisallowMultipleStatements">Generic.Formatting.DisallowMultipleStatements</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.WhiteSpace.ScopeIndent">Generic.WhiteSpace.ScopeIndent</a></td>
+                    <td>{[{ignoreIndentationTokens }]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.WhiteSpace.DisallowTabIndent">Generic.WhiteSpace.DisallowTabIndent</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.PHP.LowerCaseKeyword">Generic.PHP.LowerCaseKeyword</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.PHP.LowerCaseConstant">Generic.PHP.LowerCaseConstant</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#PSR2.Classes.PropertyDeclaration.SpacingAfterType">PSR2.Classes.PropertyDeclaration.SpacingAfterType</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.Scope.MethodScope">Squiz.Scope.MethodScope</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.WhiteSpace.ScopeKeywordSpacing">Squiz.WhiteSpace.ScopeKeywordSpacing</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.Functions.FunctionDeclaration">Squiz.Functions.FunctionDeclaration</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.Functions.LowercaseFunctionKeywords">Squiz.Functions.LowercaseFunctionKeywords</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.Functions.FunctionDeclarationArgumentSpacing">Squiz.Functions.FunctionDeclarationArgumentSpacing</a></td>
+                    <td>{[{equalsSpacing 1}]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterHint">Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterHint</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#PEAR.Functions.ValidDefaultValue">PEAR.Functions.ValidDefaultValue</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.Functions.MultiLineFunctionDeclaration">Squiz.Functions.MultiLineFunctionDeclaration</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.Functions.FunctionCallArgumentSpacing">Generic.Functions.FunctionCallArgumentSpacing</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#PSR2.Methods.FunctionCallSignature.SpaceAfterCloseBracket">PSR2.Methods.FunctionCallSignature.SpaceAfterCloseBracket</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#PSR2.Methods.FunctionCallSignature.OpeningIndent">PSR2.Methods.FunctionCallSignature.OpeningIndent</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.ControlStructures.ControlSignature">Squiz.ControlStructures.ControlSignature</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.WhiteSpace.ControlStructureSpacing.SpacingAfterOpen">Squiz.WhiteSpace.ControlStructureSpacing.SpacingAfterOpen</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.WhiteSpace.ControlStructureSpacing.SpacingBeforeClose">Squiz.WhiteSpace.ControlStructureSpacing.SpacingBeforeClose</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.WhiteSpace.ScopeClosingBrace">Squiz.WhiteSpace.ScopeClosingBrace</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.ControlStructures.ForEachLoopDeclaration">Squiz.ControlStructures.ForEachLoopDeclaration</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.ControlStructures.ForLoopDeclaration">Squiz.ControlStructures.ForLoopDeclaration</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.ControlStructures.ForLoopDeclaration.SpacingAfterOpen">Squiz.ControlStructures.ForLoopDeclaration.SpacingAfterOpen</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.ControlStructures.ForLoopDeclaration.SpacingBeforeClose">Squiz.ControlStructures.ForLoopDeclaration.SpacingBeforeClose</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.ControlStructures.LowercaseDeclaration">Squiz.ControlStructures.LowercaseDeclaration</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.ControlStructures.ForEachLoopDeclaration.AsNotLower">Squiz.ControlStructures.ForEachLoopDeclaration.AsNotLower</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.ControlStructures.ForEachLoopDeclaration.SpaceAfterOpen">Squiz.ControlStructures.ForEachLoopDeclaration.SpaceAfterOpen</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.ControlStructures.ForEachLoopDeclaration.SpaceBeforeClose">Squiz.ControlStructures.ForEachLoopDeclaration.SpaceBeforeClose</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.ControlStructures.InlineControlStructure">Generic.ControlStructures.InlineControlStructure</a></td>
+                    <td>{[]}</td>
+                </tr></table>
+        </details>
+
+    </section><section class="rule-sets"><h2 id="squizlabs/PHP_CodeSniffer/Squiz">Squiz</h2>
+        <p class="subtitle"><a href="https://github.com/squizlabs/PHP_CodeSniffer.git" target="_blank">https://github.com/squizlabs/PHP_CodeSniffer.git</a></p>
+
+        <details>
+            <summary><h3>Rules</h3></summary>
+
+            <table><div>
+                        <summary><h4 id="Squiz.Arrays.ArrayBracketSpacing">Array Bracket Spacing (Squiz.Arrays.ArrayBracketSpacing)</h4></summary>
+
+                        <p>When referencing arrays you should not put whitespace around the opening bracket or before the closing bracket.</p>
+
+                        <div><details>
+                                        <summary>Valid: No spaces around the brackets.</summary>
+
+                                        <pre><code>$foo[&#39;bar&#39;];
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Spaces around the brackets.</summary>
+
+                                        <pre><code>$foo [ &#39;bar&#39; ];
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Squiz.Arrays.ArrayDeclaration">Array Declarations (Squiz.Arrays.ArrayDeclaration)</h4></summary>
+
+                        <p>All array values must be followed by a comma, including the final value.</p>
+
+                        <div><details>
+                                        <summary>Valid: array keyword lowercase</summary>
+
+                                        <pre><code>$array = array(&#39;val1&#39;, &#39;val2&#39;);
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: first letter capitalised</summary>
+
+                                        <pre><code>$array = Array(&#39;val1&#39;, &#39;val2&#39;);
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: first key on second line</summary>
+
+                                        <pre><code>$array = array(
+          &#39;key1&#39; =&gt; &#39;value1&#39;,
+          &#39;key2&#39; =&gt; &#39;value2&#39;,
+         );
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: first key on same line</summary>
+
+                                        <pre><code>$array = array(&#39;key1&#39; =&gt; &#39;value1&#39;,
+          &#39;key2&#39; =&gt; &#39;value2&#39;,
+         );
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: aligned correctly</summary>
+
+                                        <pre><code>$array = array(
+          &#39;key1&#39; =&gt; &#39;value1&#39;,
+          &#39;key2&#39; =&gt; &#39;value2&#39;,
+         );
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: keys and parenthesis aligned incorrectly</summary>
+
+                                        <pre><code>$array = array(
+         &#39;key1&#39; =&gt; &#39;value1&#39;,
+         &#39;key2&#39; =&gt; &#39;value2&#39;,
+);
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: keys and values aligned</summary>
+
+                                        <pre><code>$array = array(
+          &#39;keyTen&#39;    =&gt; &#39;ValueTen&#39;,
+          &#39;keyTwenty&#39; =&gt; &#39;ValueTwenty&#39;,
+         );
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: alignment incorrect</summary>
+
+                                        <pre><code>$array = array(
+          &#39;keyTen&#39; =&gt; &#39;ValueTen&#39;,
+          &#39;keyTwenty&#39; =&gt; &#39;ValueTwenty&#39;,
+         );
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: comma after each value</summary>
+
+                                        <pre><code>$array = array(
+          &#39;key1&#39; =&gt; &#39;value1&#39;,
+          &#39;key2&#39; =&gt; &#39;value2&#39;,
+          &#39;key3&#39; =&gt; &#39;value3&#39;,
+         );
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: no comma after last value</summary>
+
+                                        <pre><code>$array = array(
+          &#39;key1&#39; =&gt; &#39;value1&#39;,
+          &#39;key2&#39; =&gt; &#39;value2&#39;,
+          &#39;key3&#39; =&gt; &#39;value3&#39; 
+         );
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Squiz.Classes.LowercaseClassKeywords">Lowercase Class Keywords (Squiz.Classes.LowercaseClassKeywords)</h4></summary>
+
+                        <p>The php keywords class, interface, trait, extends, implements, abstract, final, var, and const should be lowercase.</p>
+
+                        <div><details>
+                                        <summary>Valid: Lowercase class keywords.</summary>
+
+                                        <pre><code>final class Foo extends Bar
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Initial capitalization of class keywords.</summary>
+
+                                        <pre><code>Final Class Foo Extends Bar
+{
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Squiz.Classes.SelfMemberReference">Self Member Reference (Squiz.Classes.SelfMemberReference)</h4></summary>
+
+                        <p>The self keyword should be used instead of the current class name, should be lowercase, and should not have spaces before or after it.</p>
+
+                        <div><details>
+                                        <summary>Valid: Lowercase self used.</summary>
+
+                                        <pre><code>self::foo();
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Uppercase self used.</summary>
+
+                                        <pre><code>SELF::foo();
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Correct spacing used.</summary>
+
+                                        <pre><code>self::foo();
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Incorrect spacing used.</summary>
+
+                                        <pre><code>self :: foo();
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Self used as reference.</summary>
+
+                                        <pre><code>class Foo
+{
+    public static function bar()
+    {
+    }
+
+    public static function baz()
+    {
+        self::bar();
+    }
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Local class name used as reference.</summary>
+
+                                        <pre><code>class Foo
+{
+    public static function bar()
+    {
+    }
+
+    public static function baz()
+    {
+        Foo::bar();
+    }
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Squiz.Commenting.DocCommentAlignment">Doc Comment Alignment (Squiz.Commenting.DocCommentAlignment)</h4></summary>
+
+                        <p>The asterisks in a doc comment should align, and there should be one space between the asterisk and tags.</p>
+
+                        <div><details>
+                                        <summary>Valid: Asterisks are aligned.</summary>
+
+                                        <pre><code>/**
+ * @see foo()
+ */
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Asterisks are not aligned.</summary>
+
+                                        <pre><code>/**
+  * @see foo()
+*/
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: One space between asterisk and tag.</summary>
+
+                                        <pre><code>/**
+ * @see foo()
+ */
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Incorrect spacing used.</summary>
+
+                                        <pre><code>/**
+ *  @see foo()
+ */
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Squiz.Commenting.FunctionCommentThrowTag">Doc Comment Throws Tag (Squiz.Commenting.FunctionCommentThrowTag)</h4></summary>
+
+                        <p>If a function throws any exceptions, they should be documented in a @throws tag.</p>
+
+                        <div><details>
+                                        <summary>Valid: @throws tag used.</summary>
+
+                                        <pre><code>/**
+ * @throws Exception all the time
+ * @return void
+ */
+function foo()
+{
+    throw new Exception(&#39;Danger!&#39;);
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: No @throws tag used for throwing function.</summary>
+
+                                        <pre><code>/**
+ * @return void
+ */
+function foo()
+{
+    throw new Exception(&#39;Danger!&#39;);
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Squiz.ControlStructures.ForEachLoopDeclaration">Foreach Loop Declarations (Squiz.ControlStructures.ForEachLoopDeclaration)</h4></summary>
+
+                        <p>There should be a space between each element of a foreach loop and the as keyword should be lowercase.</p>
+
+                        <div><details>
+                                        <summary>Valid: Correct spacing used.</summary>
+
+                                        <pre><code>foreach ($foo as $bar =&gt; $baz) {
+    echo $baz;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Invalid spacing used.</summary>
+
+                                        <pre><code>foreach ( $foo  as  $bar=&gt;$baz ) {
+    echo $baz;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Lowercase as keyword.</summary>
+
+                                        <pre><code>foreach ($foo as $bar =&gt; $baz) {
+    echo $baz;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Uppercase as keyword.</summary>
+
+                                        <pre><code>foreach ($foo AS $bar =&gt; $baz) {
+    echo $baz;
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Squiz.ControlStructures.ForLoopDeclaration">For Loop Declarations (Squiz.ControlStructures.ForLoopDeclaration)</h4></summary>
+
+                        <p>In a for loop declaration, there should be no space inside the brackets and there should be 0 spaces before and 1 space after semicolons.</p>
+
+                        <div><details>
+                                        <summary>Valid: Correct spacing used.</summary>
+
+                                        <pre><code>for ($i = 0; $i &lt; 10; $i&#43;&#43;) {
+    echo $i;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Invalid spacing used inside brackets.</summary>
+
+                                        <pre><code>for ( $i = 0; $i &lt; 10; $i&#43;&#43; ) {
+    echo $i;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Correct spacing used.</summary>
+
+                                        <pre><code>for ($i = 0; $i &lt; 10; $i&#43;&#43;) {
+    echo $i;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Invalid spacing used before semicolons.</summary>
+
+                                        <pre><code>for ($i = 0 ; $i &lt; 10 ; $i&#43;&#43;) {
+    echo $i;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: Correct spacing used.</summary>
+
+                                        <pre><code>for ($i = 0; $i &lt; 10; $i&#43;&#43;) {
+    echo $i;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Invalid spacing used after semicolons.</summary>
+
+                                        <pre><code>for ($i = 0;$i &lt; 10;$i&#43;&#43;) {
+    echo $i;
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Squiz.ControlStructures.LowercaseDeclaration">Lowercase Control Structure Keywords (Squiz.ControlStructures.LowercaseDeclaration)</h4></summary>
+
+                        <p>The php keywords if, else, elseif, foreach, for, do, switch, while, try, and catch should be lowercase.</p>
+
+                        <div><details>
+                                        <summary>Valid: Lowercase if keyword.</summary>
+
+                                        <pre><code>if ($foo) {
+    $bar = true;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Uppercase if keyword.</summary>
+
+                                        <pre><code>IF ($foo) {
+    $bar = true;
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Squiz.Functions.FunctionDuplicateArgument">Lowercase Built-In functions (Squiz.Functions.FunctionDuplicateArgument)</h4></summary>
+
+                        <p>All PHP built-in functions should be lowercased when called.</p>
+
+                        <div><details>
+                                        <summary>Valid: Lowercase function call.</summary>
+
+                                        <pre><code>if (isset($foo)) {
+    echo $foo;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: isset not called as lowercase.</summary>
+
+                                        <pre><code>if (isSet($foo)) {
+    echo $foo;
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Squiz.Functions.LowercaseFunctionKeywords">Lowercase Function Keywords (Squiz.Functions.LowercaseFunctionKeywords)</h4></summary>
+
+                        <p>The php keywords function, public, private, protected, and static should be lowercase.</p>
+
+                        <div><details>
+                                        <summary>Valid: Lowercase function keyword.</summary>
+
+                                        <pre><code>function foo()
+{
+    return true;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Uppercase function keyword.</summary>
+
+                                        <pre><code>FUNCTION foo()
+{
+    return true;
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Squiz.Scope.StaticThisUsage">Static This Usage (Squiz.Scope.StaticThisUsage)</h4></summary>
+
+                        <p>Static methods should not use $this.</p>
+
+                        <div><details>
+                                        <summary>Valid: Using self:: to access static variables.</summary>
+
+                                        <pre><code>class Foo
+{
+    static function bar()
+    {
+        return self::$staticMember;
+    }
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Using $this-&gt; to access static variables.</summary>
+
+                                        <pre><code>class Foo
+{
+    static function bar()
+    {
+    return $this-&gt;$staticMember;
+    }
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Squiz.Strings.EchoedStrings">Echoed Strings (Squiz.Strings.EchoedStrings)</h4></summary>
+
+                        <p>Simple strings should not be enclosed in parentheses when being echoed.</p>
+
+                        <div><details>
+                                        <summary>Valid: Using echo without parentheses.</summary>
+
+                                        <pre><code>echo &#34;Hello&#34;;
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Using echo with parentheses.</summary>
+
+                                        <pre><code>echo(&#34;Hello&#34;);
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Squiz.WhiteSpace.CastSpacing">Cast Whitespace (Squiz.WhiteSpace.CastSpacing)</h4></summary>
+
+                        <p>Casts should not have whitespace inside the parentheses.</p>
+
+                        <div><details>
+                                        <summary>Valid: No spaces.</summary>
+
+                                        <pre><code>$foo = (int)&#39;42&#39;;
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Whitespace used inside parentheses.</summary>
+
+                                        <pre><code>$foo = ( int )&#39;42&#39;;
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Squiz.WhiteSpace.FunctionOpeningBrace">Function Opening Brace Whitespace (Squiz.WhiteSpace.FunctionOpeningBrace)</h4></summary>
+
+                        <p>The opening brace for functions should be on a new line with no blank lines surrounding it.</p>
+
+                        <div><details>
+                                        <summary>Valid: Opening brace is on a new line.</summary>
+
+                                        <pre><code>function foo()
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Opening brace is on the same line as the function declaration.</summary>
+
+                                        <pre><code>function foo() {
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: No blank lines after the opening brace.</summary>
+
+                                        <pre><code>function foo()
+{
+    return 42;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: A blank line after the opening brace.</summary>
+
+                                        <pre><code>function foo()
+{
+
+    return 42;
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Squiz.WhiteSpace.LanguageConstructSpacing">Language Construct Whitespace (Squiz.WhiteSpace.LanguageConstructSpacing)</h4></summary>
+
+                        <p>The php constructs echo, print, return, include, include_once, require, require_once, and new should have one space after them.</p>
+
+                        <div><details>
+                                        <summary>Valid: echo statement with a single space after it.</summary>
+
+                                        <pre><code>echo &#34;hi&#34;;
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: echo statement with no space after it.</summary>
+
+                                        <pre><code>echo&#34;hi&#34;;
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Squiz.WhiteSpace.ObjectOperatorSpacing">Object Operator Spacing (Squiz.WhiteSpace.ObjectOperatorSpacing)</h4></summary>
+
+                        <p>The object operator (-&gt;) should not have any space around it.</p>
+
+                        <div><details>
+                                        <summary>Valid: No spaces around the object operator.</summary>
+
+                                        <pre><code>$foo-&gt;bar();
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Whitespace surrounding the object operator.</summary>
+
+                                        <pre><code>$foo -&gt; bar();
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Squiz.WhiteSpace.ScopeKeywordSpacing">Scope Keyword Spacing (Squiz.WhiteSpace.ScopeKeywordSpacing)</h4></summary>
+
+                        <p>The php keywords static, public, private, and protected should have one space after them.</p>
+
+                        <div><details>
+                                        <summary>Valid: A single space following the keywords.</summary>
+
+                                        <pre><code>public static function foo()
+{
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Multiple spaces following the keywords.</summary>
+
+                                        <pre><code>public  static  function foo()
+{
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Squiz.WhiteSpace.SemicolonSpacing">Semicolon Spacing (Squiz.WhiteSpace.SemicolonSpacing)</h4></summary>
+
+                        <p>Semicolons should not have spaces before them.</p>
+
+                        <div><details>
+                                        <summary>Valid: No space before the semicolon.</summary>
+
+                                        <pre><code>echo &#34;hi&#34;;
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: Space before the semicolon.</summary>
+
+                                        <pre><code>echo &#34;hi&#34; ;
+</code></pre>
+                                    </details></div>
+                    </div></table>
+        </details>
+
+        <details>
+            <summary><h3>References</h3></summary>
+
+            <table><tr>
+                    <td><a href="#Generic.Arrays.DisallowLongArraySyntax">Generic.Arrays.DisallowLongArraySyntax</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.CodeAnalysis.EmptyStatement">Generic.CodeAnalysis.EmptyStatement</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.Commenting.Todo">Generic.Commenting.Todo</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.Commenting.DocComment">Generic.Commenting.DocComment</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.ControlStructures.InlineControlStructure">Generic.ControlStructures.InlineControlStructure</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.Formatting.DisallowMultipleStatements">Generic.Formatting.DisallowMultipleStatements</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.Formatting.SpaceAfterCast">Generic.Formatting.SpaceAfterCast</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.Functions.FunctionCallArgumentSpacing">Generic.Functions.FunctionCallArgumentSpacing</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.NamingConventions.ConstructorName">Generic.NamingConventions.ConstructorName</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.NamingConventions.UpperCaseConstantName">Generic.NamingConventions.UpperCaseConstantName</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.PHP.DeprecatedFunctions">Generic.PHP.DeprecatedFunctions</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.PHP.DisallowShortOpenTag">Generic.PHP.DisallowShortOpenTag</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.PHP.LowerCaseKeyword">Generic.PHP.LowerCaseKeyword</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.PHP.LowerCaseConstant">Generic.PHP.LowerCaseConstant</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.Strings.UnnecessaryStringConcat">Generic.Strings.UnnecessaryStringConcat</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.WhiteSpace.DisallowTabIndent">Generic.WhiteSpace.DisallowTabIndent</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.WhiteSpace.LanguageConstructSpacing">Generic.WhiteSpace.LanguageConstructSpacing</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.WhiteSpace.IncrementDecrementSpacing">Generic.WhiteSpace.IncrementDecrementSpacing</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.WhiteSpace.ScopeIndent">Generic.WhiteSpace.ScopeIndent</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#PEAR.ControlStructures.MultiLineCondition">PEAR.ControlStructures.MultiLineCondition</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#PEAR.Files.IncludingFile">PEAR.Files.IncludingFile</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#PEAR.Formatting.MultiLineAssignment">PEAR.Formatting.MultiLineAssignment</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#PEAR.Functions.ValidDefaultValue">PEAR.Functions.ValidDefaultValue</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#PSR2.Files.EndFileNewline">PSR2.Files.EndFileNewline</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Zend.Files.ClosingTag">Zend.Files.ClosingTag</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Zend.Debug.CodeAnalyzer">Zend.Debug.CodeAnalyzer</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.Files.LineLength">Generic.Files.LineLength</a></td>
+                    <td>{[{lineLimit 120} {absoluteLineLimit 0}]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.Files.LineEndings">Generic.Files.LineEndings</a></td>
+                    <td>{[{eolChar \n}]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.Formatting.MultipleStatementAlignment">Generic.Formatting.MultipleStatementAlignment</a></td>
+                    <td>{[{maxPadding 20} {error true}]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.PHP.ForbiddenFunctions">Generic.PHP.ForbiddenFunctions</a></td>
+                    <td>{[{forbiddenFunctions }]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.CodeAnalysis.EmptyStatement.DetectedCATCH">Generic.CodeAnalysis.EmptyStatement.DetectedCATCH</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.Debug.ClosureLinter">Generic.Debug.ClosureLinter</a></td>
+                    <td>{[{errorCodes 0210} {ignoreCodes 0001,0110,0240}]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.Debug.ClosureLinter.ExternalToolError">Generic.Debug.ClosureLinter.ExternalToolError</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#PEAR.Functions.FunctionCallSignature">PEAR.Functions.FunctionCallSignature</a></td>
+                    <td>{[{allowMultipleArguments false}]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.Arrays.ArrayIndent">Generic.Arrays.ArrayIndent</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.Arrays.ArrayDeclaration.KeyNotAligned">Squiz.Arrays.ArrayDeclaration.KeyNotAligned</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.Arrays.ArrayDeclaration.ValueNotAligned">Squiz.Arrays.ArrayDeclaration.ValueNotAligned</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.Arrays.ArrayDeclaration.CloseBraceNotAligned">Squiz.Arrays.ArrayDeclaration.CloseBraceNotAligned</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.Arrays.ArrayDeclaration.CloseBraceNewLine">Squiz.Arrays.ArrayDeclaration.CloseBraceNewLine</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.WhiteSpace.LanguageConstructSpacing">Squiz.WhiteSpace.LanguageConstructSpacing</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.Commenting.InlineComment">Squiz.Commenting.InlineComment</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.NamingConventions.ValidFunctionName.PrivateNoUnderscore">Squiz.NamingConventions.ValidFunctionName.PrivateNoUnderscore</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#PSR2.Methods.MethodDeclaration.Underscore">PSR2.Methods.MethodDeclaration.Underscore</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.NamingConventions.ValidVariableName.PrivateNoUnderscore">Squiz.NamingConventions.ValidVariableName.PrivateNoUnderscore</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#PSR2.Classes.PropertyDeclaration.Underscore">PSR2.Classes.PropertyDeclaration.Underscore</a></td>
+                    <td>{[]}</td>
+                </tr></table>
+        </details>
+
+    </section><section class="rule-sets"><h2 id="squizlabs/PHP_CodeSniffer/Zend">Zend</h2>
+        <p class="subtitle"><a href="https://github.com/squizlabs/PHP_CodeSniffer.git" target="_blank">https://github.com/squizlabs/PHP_CodeSniffer.git</a></p>
+
+        <details>
+            <summary><h3>Rules</h3></summary>
+
+            <table><div>
+                        <summary><h4 id="Zend.Debug.CodeAnalyzer">Zend Code Analyzer (Zend.Debug.CodeAnalyzer)</h4></summary>
+
+                        <p>PHP Code should pass the zend code analyzer.</p>
+
+                        <div><details>
+                                        <summary>Valid: Valid PHP Code.</summary>
+
+                                        <pre><code>function foo($bar, $baz)
+{
+    return $bar &#43; $baz;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: There is an unused function parameter.</summary>
+
+                                        <pre><code>function foo($bar, $baz)
+{
+    return $bar &#43; 2;
+}
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Zend.Files.ClosingTag">Closing PHP Tags (Zend.Files.ClosingTag)</h4></summary>
+
+                        <p>Files should not have closing php tags.</p>
+
+                        <div><details>
+                                        <summary>Valid: No closing tag at the end of the file.</summary>
+
+                                        <pre><code>&lt;?php
+$var = 1;
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: A closing php tag is included at the end of the file.</summary>
+
+                                        <pre><code>&lt;?php
+$var = 1;
+?&gt;
+</code></pre>
+                                    </details></div>
+                    </div><div>
+                        <summary><h4 id="Zend.NamingConventions.ValidVariableName">Variable Names (Zend.NamingConventions.ValidVariableName)</h4></summary>
+
+                        <p>Variable names should be camelCased with the first letter lowercase.  Private and protected member variables should begin with an underscore</p>
+
+                        <div><details>
+                                        <summary>Valid: A multi-word variable uses camel casing.</summary>
+
+                                        <pre><code>$testNumber = 1;
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: A multi-word variable uses underscores and initial capitalization.</summary>
+
+                                        <pre><code>$Test_Number = 1;
+</code></pre>
+                                    </details><details>
+                                        <summary>Valid: A private member variable begins with an underscore.</summary>
+
+                                        <pre><code>class Foo
+{
+    private $_bar;
+}
+</code></pre>
+                                    </details><details>
+                                        <summary>Invalid: A private member variable does not begin with an underscore.</summary>
+
+                                        <pre><code>class Foo
+{
+    private $bar;
+}
+</code></pre>
+                                    </details></div>
+                    </div></table>
+        </details>
+
+        <details>
+            <summary><h3>References</h3></summary>
+
+            <table><tr>
+                    <td><a href="#Generic.Functions.FunctionCallArgumentSpacing">Generic.Functions.FunctionCallArgumentSpacing</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.Functions.OpeningFunctionBraceBsdAllman">Generic.Functions.OpeningFunctionBraceBsdAllman</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.PHP.DisallowShortOpenTag">Generic.PHP.DisallowShortOpenTag</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.WhiteSpace.DisallowTabIndent">Generic.WhiteSpace.DisallowTabIndent</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#PEAR.Classes.ClassDeclaration">PEAR.Classes.ClassDeclaration</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#PEAR.ControlStructures.ControlSignature">PEAR.ControlStructures.ControlSignature</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#PEAR.Functions.FunctionCallSignature">PEAR.Functions.FunctionCallSignature</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#PEAR.Functions.ValidDefaultValue">PEAR.Functions.ValidDefaultValue</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#PEAR.WhiteSpace.ScopeClosingBrace">PEAR.WhiteSpace.ScopeClosingBrace</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Squiz.Functions.GlobalFunction">Squiz.Functions.GlobalFunction</a></td>
+                    <td>{[]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.Files.LineLength">Generic.Files.LineLength</a></td>
+                    <td>{[{lineLimit 80} {absoluteLineLimit 120}]}</td>
+                </tr><tr>
+                    <td><a href="#Generic.Files.LineEndings">Generic.Files.LineEndings</a></td>
+                    <td>{[{eolChar \n}]}</td>
+                </tr></table>
+        </details>
+
+    </section></body>
 </html>
